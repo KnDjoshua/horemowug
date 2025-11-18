@@ -41,96 +41,383 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <!-- Enhanced Hero Section with YouTube Live -->
+    <section class="hero">
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
+                <!-- YouTube Live Indicator -->
+
                 <h1 class="hero-title">Holiness Revival Movement Worldwide</h1>
                 <p class="hero-subtitle">Bringing Christ's Sheep Back to True Holiness and Righteousness</p>
-                <p class="hero-text">A non-denominational ministry dedicated to promoting biblical righteousness and
-                    holiness in churches and nations worldwide.</p>
+                <p class="hero-text">Join our live services on YouTube and be part of our global community pursuing
+                    biblical holiness and righteousness.</p>
+
                 <div class="hero-buttons">
-                    <a href="#about" class="btn btn-primary">Learn More</a>
-                    <a href="#sermons" class="btn btn-secondary">Watch Sermons</a>
+                    <a href="https://www.youtube.com/@HOREMOWUGANDA" class="btn btn-youtube-live" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                        Our YouTube Channel
+                    </a>
+                    <a href="#about" class="btn btn-primary">Learn About HOREMOW</a>
+                    <a href="#events" class="btn btn-secondary" target="_blank">
+                        </i>Upcoming Events
+
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- YouTube Live API Integration -->
+    <section id="youtube-live" class="section youtube-live">
+        <div class="container">
+            <h2 class="section-title">Watch Live on YouTube</h2>
+            <p class="section-subtitle">Join our services live from anywhere in the world</p>
+
+            <!-- Live Status Indicator -->
+            <div class="api-status-indicator">
+                <div class="status-loading">
+                    <i class="fas fa-sync fa-spin"></i>
+                    <span>Checking live status...</span>
+                </div>
+                <div class="status-live" style="display: none;">
+                    <span class="live-pulse"></span>
+                    <i class="fab fa-youtube"></i>
+                    <strong>LIVE NOW</strong>
+                    <span>• Streaming on YouTube</span>
+                </div>
+                <div class="status-offline" style="display: none;">
+                    <i class="fas fa-moon"></i>
+                    <span>We're currently offline</span>
+                </div>
+                <div class="status-error" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Unable to check live status</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Stream Container -->
+            <div class="dynamic-stream-container">
+                <!-- Loading State -->
+                <div class="stream-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Checking for live stream...</p>
+                </div>
+
+                <!-- Live Stream Embed -->
+                <div class="live-stream-embed" style="display: none;">
+                    <div class="embed-container" id="youtube-embed">
+                        <!-- YouTube iframe will be inserted here by API -->
+                    </div>
+                    <div class="stream-info">
+                        <h3 id="stream-title">Loading stream title...</h3>
+                        <p id="stream-description">Loading stream description...</p>
+                        <div class="stream-meta">
+                            <span id="viewer-count">
+                                <i class="fas fa-eye"></i>
+                                <span class="count">--</span> watching
+                            </span>
+                            <span id="stream-time">
+                                <i class="far fa-clock"></i>
+                                Started <span class="time">--</span> ago
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offline State -->
+                <div class="offline-state" style="display: none;">
+                    <div class="offline-content">
+                        <i class="fab fa-youtube"></i>
+                        <h3>We're Offline</h3>
+                        <p>Check back during our scheduled service times:</p>
+
+                        <div class="schedule-cards">
+                            <div class="schedule-card">
+                                <div class="day">Sunday</div>
+                                <div class="time">10:00 AM EAT</div>
+                                <div class="service">Holiness Service</div>
+                            </div>
+                            <div class="schedule-card">
+                                <div class="day">Tuesday</div>
+                                <div class="time">04:00 PM EAT</div>
+                                <div class="service">Bible Study</div>
+                            </div>
+                            <div class="schedule-card">
+                                <div class="day">Saturday</div>
+                                <div class="time">02:00 PM EAT</div>
+                                <div class="service">Fellowship</div>
+                            </div>
+                        </div>
+
+                        <div class="offline-actions">
+                            <a href="[YOUR_YOUTUBE_CHANNEL_LINK]" class="btn btn-youtube" target="_blank"
+                                id="channel-link">
+                                <i class="fab fa-youtube"></i>
+                                Visit Our YouTube Channel
+                            </a>
+                            <button class="btn btn-outline" onclick="checkLiveStatus()">
+                                <i class="fas fa-sync"></i>
+                                Check Again
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error State -->
+                <div class="error-state" style="display: none;">
+                    <div class="error-content">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Unable to Load Stream</h3>
+                        <p>There was an error checking our live status. Please try again later.</p>
+                        <div class="error-actions">
+                            <a href="[YOUR_YOUTUBE_CHANNEL_LINK]" class="btn btn-youtube" target="_blank">
+                                <i class="fab fa-youtube"></i>
+                                Go to YouTube Channel
+                            </a>
+                            <button class="btn btn-outline" onclick="checkLiveStatus()">
+                                <i class="fas fa-redo"></i>
+                                Retry
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Auto-Refresh Indicator -->
+            <div class="auto-refresh-info">
+                <i class="fas fa-sync-alt"></i>
+                <span>Live status updates every 30 seconds</span>
+                <span id="last-checked">Last checked: --</span>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Enhanced About Section -->
     <section id="about" class="section about">
         <div class="container">
             <h2 class="section-title">About HOREMOW</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>HOLINESS REVIVAL MINISTRY WORLDWIDE (also known as Holiness Revival Movement Worldwide - HOREMOW)
-                        is a non-denominational Ministry given to the promotion of biblical Righteousness and Holiness
-                        in Churches and Nations of the world.</p>
-                    <p>The ministry started with 22 people in 2009 and was officially inaugurated in 2010. The
-                        International Director/Founder is Pastor Paul Rika. HOREMOW is ordained by our Lord, Savior, and
-                        King Jesus Christ in these last days to bring His sheep back to true holiness and righteousness.
-                    </p>
-                    <p>Our ultimate goal is to evangelize the whole world in preparation for the rapture.</p>
-                </div>
-                <div class="about-stats">
-                    <div class="stat">
-                        <h3>Founded</h3>
-                        <p>2010</p>
+            <p class="section-subtitle">Holiness Revival Movement Worldwide - Bringing Christ's Sheep Back to True
+                Holiness</p>
+
+            <div class="about-hero">
+                <div class="about-content">
+                    <div class="about-text">
+                        <div class="mission-statement">
+                            <div class="verse-highlight">
+                                <i class="fas fa-quote-left"></i>
+                                <p>"Follow peace with all men, and holiness, without which no man shall see the Lord"
+                                </p>
+                                <span class="verse-ref">Hebrews 12:14</span>
+                            </div>
+
+                            <p>HOLINESS REVIVAL MINISTRY WORLDWIDE (also known as Holiness Revival Movement Worldwide -
+                                HOREMOW) is a non-denominational Ministry given to the promotion of biblical
+                                Righteousness and Holiness in Churches and Nations of the world.</p>
+
+                            <div class="foundation-story">
+                                <h3>Our Foundation</h3>
+                                <p>The ministry started with 22 people in 2009 and was officially inaugurated in 2010
+                                    under the divine guidance of our Lord, Savior, and King Jesus Christ. Founded by
+                                    Pastor Paul Rika, HOREMOW is ordained in these last days to bring His sheep back to
+                                    true holiness and righteousness.</p>
+                            </div>
+
+                            <div class="vision-callout">
+                                <i class="fas fa-bullseye"></i>
+                                <div>
+                                    <h4>Our Ultimate Goal</h4>
+                                    <p>To evangelize the whole world in preparation for the rapture through the message
+                                        of biblical holiness and righteousness.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat">
-                        <h3>Headquarters</h3>
-                        <p>Abuja, Nigeria</p>
-                    </div>
-                    <div class="stat">
-                        <h3>Uganda Chapter</h3>
-                        <p>Est. 2016</p>
-                    </div>
-                    <div class="stat">
-                        <h3>Core Verse</h3>
-                        <p>Hebrews 12:14</p>
+
+                    <div class="about-visual">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-number">22</span>
+                                    <span class="stat-label">Founding Members</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-number">2010</span>
+                                    <span class="stat-label">Year Established</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-globe-africa"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-number">30+</span>
+                                    <span class="stat-label">Chapters</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-praying-hands"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-number">15+</span>
+                                    <span class="stat-label">Years of Ministry</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="location-info">
+                            <div class="headquarters">
+                                <h4>International Headquarters</h4>
+                                <p><i class="fas fa-map-marker-alt"></i> Kwali, Abuja, Nigeria</p>
+                                <p class="location-desc">Behind Federal Government College</p>
+                            </div>
+                            <div class="east-africa-hq">
+                                <h4>East Africa Headquarters</h4>
+                                <p><i class="fas fa-map-marker-alt"></i> Lugala, Kampala, Uganda</p>
+                                <p class="location-desc">Established 2016</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Enhanced Aims and Objectives -->
             <div class="aims-section">
-                <h3 class="subsection-title">Our Aims and Objectives</h3>
+                <div class="section-header">
+                    <h3 class="subsection-title">Our Mission & Objectives</h3>
+                    <p class="subsection-subtitle">Committed to spreading biblical holiness worldwide through various
+                        ministries</p>
+                </div>
+
                 <div class="aims-grid">
                     <div class="aim-card">
-                        <div class="aim-icon">
-                            <i class="fas fa-cross"></i>
+                        <div class="aim-header">
+                            <div class="aim-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <span class="aim-number">01</span>
                         </div>
-                        <h4>Revival Meetings</h4>
+                        <h4>Revival Meetings & Crusades</h4>
                         <p>Holding Crusades, Conferences, and Revival meetings to bring sinners to Christ and believers
-                            to His holiness.</p>
+                            to His holiness through powerful evangelism and spiritual awakening.</p>
+                        <div class="scripture-ref">
+                            <i class="fas fa-bible"></i>
+                            <span>Acts 26:16-18</span>
+                        </div>
                     </div>
+
                     <div class="aim-card">
-                        <div class="aim-icon">
-                            <i class="fas fa-book"></i>
+                        <div class="aim-header">
+                            <div class="aim-icon">
+                                <i class="fas fa-book-bible"></i>
+                            </div>
+                            <span class="aim-number">02</span>
                         </div>
                         <h4>Christian Literature</h4>
                         <p>Producing and distributing Christian literature, audio, and visual messages that promote
-                            salvation and holiness.</p>
+                            salvation and holiness through biblically sound teaching materials.</p>
+                        <div class="scripture-ref">
+                            <i class="fas fa-bible"></i>
+                            <span>Luke 1:1-4</span>
+                        </div>
                     </div>
+
                     <div class="aim-card">
-                        <div class="aim-icon">
-                            <i class="fas fa-church"></i>
+                        <div class="aim-header">
+                            <div class="aim-icon">
+                                <i class="fas fa-hands-praying"></i>
+                            </div>
+                            <span class="aim-number">03</span>
                         </div>
                         <h4>Christian Unity</h4>
                         <p>Bringing denominational churches into Christian unity through the belief and practice of the
-                            faith once delivered to the saints.</p>
-                    </div>
-                    <div class="aim-card">
-                        <div class="aim-icon">
-                            <i class="fas fa-globe-africa"></i>
+                            faith once delivered unto the saints, fostering ecumenical harmony.</p>
+                        <div class="scripture-ref">
+                            <i class="fas fa-bible"></i>
+                            <span>Ephesians 4:12-15</span>
                         </div>
-                        <h4>Global Chapters</h4>
+                    </div>
+
+                    <div class="aim-card">
+                        <div class="aim-header">
+                            <div class="aim-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <span class="aim-number">04</span>
+                        </div>
+                        <h4>Global Expansion</h4>
                         <p>Establishing chapters of HOREMOW in every nation, supporting believers and ministers in their
-                            spiritual journey.</p>
+                            spiritual journey through localized ministry presence.</p>
+                        <div class="scripture-ref">
+                            <i class="fas fa-bible"></i>
+                            <span>Philippians 4:8-9</span>
+                        </div>
+                    </div>
+
+                    <div class="aim-card">
+                        <div class="aim-header">
+                            <div class="aim-icon">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <span class="aim-number">05</span>
+                        </div>
+                        <h4>Multilingual Resources</h4>
+                        <p>Translating and interpreting ministry materials into local, national and international
+                            languages to reach diverse communities with the message of holiness.</p>
+                        <div class="scripture-ref">
+                            <i class="fas fa-bible"></i>
+                            <span>1 Corinthians 14:9-13</span>
+                        </div>
+                    </div>
+
+                    <div class="aim-card">
+                        <div class="aim-header">
+                            <div class="aim-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <span class="aim-number">06</span>
+                        </div>
+                        <h4>Biblical Training</h4>
+                        <p>Establishing Bible colleges where believers and ministries can receive biblical and
+                            ministerial training for sound Christian ministry and leadership development.</p>
+                        <div class="scripture-ref">
+                            <i class="fas fa-bible"></i>
+                            <span>2 Timothy 2:2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="about-cta">
+                <div class="cta-content">
+                    <h3>Join the Holiness Revival Movement</h3>
+                    <p>Become part of this global movement dedicated to promoting biblical holiness and righteousness in
+                        churches and nations worldwide.</p>
+                    <div class="cta-buttons">
+                        <a href="#chapters" class="btn btn-primary">Find a Chapter Near You</a>
+                        <a href="#contact" class="btn btn-outline">Get Involved</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
+
+
+
 
     <!-- Pastors Section -->
     <section id="pastors" class="section pastors">
@@ -263,319 +550,1108 @@
         </div>
     </section>
 
-    <!-- Chapters Section -->
+
+
+
+    <!-- Events Section -->
+    <section id="events" class="section events">
+        <div class="container">
+            <h2 class="section-title">Events & Services</h2>
+            <p class="section-subtitle">Stay connected with our ministry activities</p>
+
+            <!-- Calendar View Toggle -->
+            <div class="calendar-view-toggle">
+                <button class="view-btn active" data-view="month">Month View</button>
+                <button class="view-btn" data-view="list">List View</button>
+                <button class="view-btn" data-view="upcoming">Upcoming</button>
+            </div>
+
+            <!-- Calendar Container -->
+            <div class="calendar-container">
+                <!-- Month View -->
+                <div class="month-view active">
+                    <div class="calendar-header">
+                        <button class="nav-btn prev-month">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="current-month">July 2024</h3>
+                        <button class="nav-btn next-month">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Days will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- List View -->
+                <div class="list-view">
+                    <div class="events-list" id="events-list">
+                        <!-- Events will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="upcoming-view">
+                    <div class="upcoming-events" id="upcoming-events">
+                        <!-- Next 5 events will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Calendar Sync Status -->
+            <div class="sync-status">
+                <p>
+                    <i class="fas fa-sync-alt"></i>
+                    Events automatically sync with our Google Calendar
+                    <span id="last-sync">Last updated: Just now</span>
+                </p>
+            </div>
+
+            <!-- Add to Calendar Buttons -->
+            <div class="calendar-links">
+                <h4>Subscribe to Our Calendar</h4>
+                <div class="subscribe-buttons">
+                    <a href="#" class="btn btn-google-calendar" target="_blank" id="google-calendar-link">
+                        <i class="fab fa-google"></i>
+                        Add to Google Calendar
+                    </a>
+                    <button class="btn btn-outline" id="download-ical">
+                        <i class="fas fa-download"></i>
+                        Download iCal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details Modal -->
+    <div class="event-modal" id="event-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <div id="modal-content">
+                <!-- Event details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Enhanced Chapters Section -->
     <section id="chapters" class="section chapters">
         <div class="container">
             <h2 class="section-title">Chapters & Contacts</h2>
+            <p class="section-subtitle">Find a HOREMOW chapter near you and connect with our global community</p>
 
-            <div class="chapter-info">
-                <h3>Lugala Chapter - East African Headquarters</h3>
-                <p>HOREMOW Uganda is the East African Headquarters, birthed in 2016 by Pastor Suzan Azi. The current
-                    coordinator is Pastor Anthony Azi, who oversees the entire East African region from the Lugala base
-                    in Kampala.</p>
+            <!-- Headquarters Highlight -->
+            <div class="headquarters-highlight">
+                <div class="hq-card">
+                    <div class="hq-badge">
+                        <i class="fas fa-star"></i>
+                        East Africa Headquarters
+                    </div>
+                    <div class="hq-content">
+                        <div class="hq-info">
+                            <h3>Lugala Chapter - Kampala, Uganda</h3>
+                            <p class="hq-established">Established 2016 by Pastor Suzan Azi</p>
+                            <p>HOREMOW Uganda serves as the East African Headquarters, overseeing the entire East
+                                African region under the coordination of Pastor Anthony Azi.</p>
+
+                            <div class="hq-leaders">
+                                <div class="leader">
+                                    <div class="leader-role">East African Overseer</div>
+                                    <div class="leader-name">Pastor Anthony Azi</div>
+                                    <div class="leader-contact">
+                                        <i class="fas fa-phone"></i>
+                                        <span>+256 775 633652</span>
+                                    </div>
+                                </div>
+                                <div class="leader">
+                                    <div class="leader-role">East African Women Coordinator</div>
+                                    <div class="leader-name">Pastor Susan Azi</div>
+                                    <div class="leader-contact">
+                                        <i class="fas fa-phone"></i>
+                                        <span>+256 [PHONE_NUMBER]</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hq-map">
+                            <div class="map-placeholder">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Lugala, Kampala, Uganda</span>
+                                <button class="btn btn-outline btn-sm get-directions">
+                                    <i class="fas fa-directions"></i>
+                                    Get Directions
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="activities">
-                <h3 class="subsection-title">Weekly Activities at Lugala</h3>
-                <div class="activities-grid">
-                    <div class="activity-card">
-                        <div class="day">Tuesday</div>
-                        <div class="activity">Book Review and Revival Service</div>
-                        <div class="time">4pm - 7pm</div>
+            <!-- Weekly Activities -->
+            <div class="activities-section">
+                <div class="section-header">
+                    <h3 class="subsection-title">Weekly Activities at Lugala</h3>
+                    <p class="subsection-subtitle">Join us for fellowship, study, and evangelism throughout the week</p>
+                </div>
+
+                <div class="activities-timeline">
+                    <div class="activity-item">
+                        <div class="activity-day">
+                            <div class="day-name">Tuesday</div>
+                            <div class="day-time">4pm - 7pm</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Book Review & Revival Service</h4>
+                                <p>Deep dive into holiness literature followed by powerful revival service</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="activity-card">
-                        <div class="day">Saturday</div>
-                        <div class="activity">Unit Fellowship</div>
-                        <div class="time">2pm - 6pm</div>
+
+                    <div class="activity-item">
+                        <div class="activity-day">
+                            <div class="day-name">Saturday</div>
+                            <div class="day-time">2pm - 6pm</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Unit Fellowship</h4>
+                                <p>Small group fellowship and discipleship meetings</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="activity-card">
-                        <div class="day">Sunday</div>
-                        <div class="activity">International Bible Study</div>
-                        <div class="time">2pm - 6pm</div>
+
+                    <div class="activity-item">
+                        <div class="activity-day">
+                            <div class="day-name">Sunday</div>
+                            <div class="day-time">2pm - 6pm</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-icon">
+                                <i class="fas fa-bible"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>International Bible Study</h4>
+                                <p>Comprehensive Bible study session open to all</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="activity-card">
-                        <div class="day">Thursday & Friday</div>
-                        <div class="activity">Group & Individual Evangelism</div>
-                        <div class="time">As the Holy Spirit Leads</div>
+
+                    <div class="activity-item">
+                        <div class="activity-day">
+                            <div class="day-name">Thu & Fri</div>
+                            <div class="day-time">Flexible</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-icon">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Group & Individual Evangelism</h4>
+                                <p>Outreach activities as led by the Holy Spirit</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-item special">
+                        <div class="activity-day">
+                            <div class="day-name">Monthly</div>
+                            <div class="day-time">Last Weekend</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-icon">
+                                <i class="fas fa-pray"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Combined Service & Prayer Vigil</h4>
+                                <p>Monthly combined Kampala service and overnight prayer vigil</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="chapters-tabs">
-                <div class="tabs-header">
-                    <button class="tab-btn active" data-tab="uganda">Uganda Chapters</button>
-                    <button class="tab-btn" data-tab="east-africa">East Africa Chapters</button>
-                </div>
-
-                <div class="tab-content active" id="uganda">
-                    <div class="chapters-table-container">
-                        <table class="chapters-table">
-                            <thead>
-                                <tr>
-                                    <th>Chapter/Unit</th>
-                                    <th>Leader</th>
-                                    <th>Contact</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Lugala</td>
-                                    <td>Pastor Anthony Azi</td>
-                                    <td>256775633652</td>
-                                </tr>
-                                <tr>
-                                    <td>Lugazi</td>
-                                    <td>Pastor Kasirye Wilberforce</td>
-                                    <td>256783538438</td>
-                                </tr>
-                                <tr>
-                                    <td>Gulu</td>
-                                    <td>Brother Kicaber Sunday</td>
-                                    <td>256777169675</td>
-                                </tr>
-                                <tr>
-                                    <td>Mbarara</td>
-                                    <td>Brother Willy Okao</td>
-                                    <td>256788880464</td>
-                                </tr>
-                                <tr>
-                                    <td>Nansana</td>
-                                    <td>Sister Grace Kayongo</td>
-                                    <td>256702172699</td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <!-- Chapters Finder -->
+            <div class="chapters-finder">
+                <div class="finder-header">
+                    <h3 class="subsection-title">Find a Chapter Near You</h3>
+                    <div class="finder-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="chapterSearch" placeholder="Search by location, leader name...">
+                        </div>
+                        <div class="filter-tabs">
+                            <button class="filter-btn active" data-filter="all">All Chapters</button>
+                            <button class="filter-btn" data-filter="uganda">Uganda</button>
+                            <button class="filter-btn" data-filter="east-africa">East Africa</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="tab-content" id="east-africa">
-                    <div class="chapters-table-container">
-                        <table class="chapters-table">
-                            <thead>
-                                <tr>
-                                    <th>Country/Chapter</th>
-                                    <th>Leader</th>
-                                    <th>Contact</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Rwanda</td>
-                                    <td>Pastor Kabango Jean</td>
-                                    <td>+250 781 043264</td>
-                                </tr>
-                                <tr>
-                                    <td>South Sudan</td>
-                                    <td>Pastor Twezeyumukiza Theoneste</td>
-                                    <td>+211 923 910255</td>
-                                </tr>
-                                <tr>
-                                    <td>Dare-es-Salaam</td>
-                                    <td>Brother Isaac Anthony</td>
-                                    <td>+255 755 081123</td>
-                                </tr>
-                                <tr>
-                                    <td>Zambia - Lusaka (Unit)</td>
-                                    <td>Sister Juliet</td>
-                                    <td>+260 976 925533</td>
-                                </tr>
-                                <tr>
-                                    <td>Malawi (Lilongwe A)</td>
-                                    <td>Sister Chawa Soko</td>
-                                    <td>+265 999 337785</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <!-- Uganda Chapters -->
+                <div class="chapters-grid active" data-region="uganda">
+                    <div class="chapter-card" data-district="kampala">
+                        <div class="chapter-header">
+                            <h4>Lugala Chapter</h4>
+                            <span class="chapter-badge headquarters">Headquarters</span>
+                        </div>
+                        <div class="chapter-info">
+                            <div class="leader-info">
+                                <i class="fas fa-user"></i>
+                                <span>Pastor Anthony Azi</span>
+                            </div>
+                            <div class="contact-info">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+256775633652">+256 775 633652</a>
+                            </div>
+                            <div class="location-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Kampala, Uganda</span>
+                            </div>
+                        </div>
+                        <div class="chapter-actions">
+                            <button class="action-btn contact-btn" data-phone="256775633652">
+                                <i class="fas fa-phone"></i>
+                                Call
+                            </button>
+                            <button class="action-btn whatsapp-btn" data-phone="256775633652">
+                                <i class="fab fa-whatsapp"></i>
+                                WhatsApp
+                            </button>
+                            <button class="action-btn directions-btn">
+                                <i class="fas fa-directions"></i>
+                                Directions
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card" data-district="lugazi">
+                        <div class="chapter-header">
+                            <h4>Lugazi Chapter</h4>
+                        </div>
+                        <div class="chapter-info">
+                            <div class="leader-info">
+                                <i class="fas fa-user"></i>
+                                <span>Pastor Kasirye Wilberforce</span>
+                            </div>
+                            <div class="contact-info">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+256783538438">+256 783 538438</a>
+                            </div>
+                            <div class="location-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Lugazi, Uganda</span>
+                            </div>
+                        </div>
+                        <div class="chapter-actions">
+                            <button class="action-btn contact-btn" data-phone="256783538438">
+                                <i class="fas fa-phone"></i>
+                                Call
+                            </button>
+                            <button class="action-btn whatsapp-btn" data-phone="256783538438">
+                                <i class="fab fa-whatsapp"></i>
+                                WhatsApp
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Add more Uganda chapters following the same pattern -->
+                    <div class="chapter-card" data-district="gulu">
+                        <div class="chapter-header">
+                            <h4>Gulu Chapter</h4>
+                        </div>
+                        <div class="chapter-info">
+                            <div class="leader-info">
+                                <i class="fas fa-user"></i>
+                                <span>Brother Kicaber Sunday</span>
+                            </div>
+                            <div class="contact-info">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+256777169675">+256 777 169675</a>
+                            </div>
+                            <div class="location-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Gulu, Uganda</span>
+                            </div>
+                        </div>
+                        <div class="chapter-actions">
+                            <button class="action-btn contact-btn" data-phone="256777169675">
+                                <i class="fas fa-phone"></i>
+                                Call
+                            </button>
+                            <button class="action-btn whatsapp-btn" data-phone="256777169675">
+                                <i class="fab fa-whatsapp"></i>
+                                WhatsApp
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card" data-district="mbarara">
+                        <div class="chapter-header">
+                            <h4>Mbarara Chapter</h4>
+                        </div>
+                        <div class="chapter-info">
+                            <div class="leader-info">
+                                <i class="fas fa-user"></i>
+                                <span>Brother Willy Okao</span>
+                            </div>
+                            <div class="contact-info">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+256788880464">+256 788 880464</a>
+                            </div>
+                            <div class="location-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Mbarara, Uganda</span>
+                            </div>
+                        </div>
+                        <div class="chapter-actions">
+                            <button class="action-btn contact-btn" data-phone="256788880464">
+                                <i class="fas fa-phone"></i>
+                                Call
+                            </button>
+                            <button class="action-btn whatsapp-btn" data-phone="256788880464">
+                                <i class="fab fa-whatsapp"></i>
+                                WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- East Africa Chapters -->
+                <div class="chapters-grid" data-region="east-africa">
+                    <div class="chapter-card" data-country="rwanda">
+                        <div class="chapter-header">
+                            <h4>Rwanda Chapter</h4>
+                            <span class="chapter-badge country">Rwanda</span>
+                        </div>
+                        <div class="chapter-info">
+                            <div class="leader-info">
+                                <i class="fas fa-user"></i>
+                                <span>Pastor Kabango Jean</span>
+                            </div>
+                            <div class="contact-info">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+250781043264">+250 781 043264</a>
+                            </div>
+                            <div class="location-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Rwanda</span>
+                            </div>
+                        </div>
+                        <div class="chapter-actions">
+                            <button class="action-btn contact-btn" data-phone="250781043264">
+                                <i class="fas fa-phone"></i>
+                                Call
+                            </button>
+                            <button class="action-btn whatsapp-btn" data-phone="250781043264">
+                                <i class="fab fa-whatsapp"></i>
+                                WhatsApp
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card" data-country="south-sudan">
+                        <div class="chapter-header">
+                            <h4>South Sudan Chapter</h4>
+                            <span class="chapter-badge country">South Sudan</span>
+                        </div>
+                        <div class="chapter-info">
+                            <div class="leader-info">
+                                <i class="fas fa-user"></i>
+                                <span>Pastor Twezeyumukiza Theoneste</span>
+                            </div>
+                            <div class="contact-info">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+211923910255">+211 923 910255</a>
+                            </div>
+                            <div class="location-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>South Sudan</span>
+                            </div>
+                        </div>
+                        <div class="chapter-actions">
+                            <button class="action-btn contact-btn" data-phone="211923910255">
+                                <i class="fas fa-phone"></i>
+                                Call
+                            </button>
+                            <button class="action-btn whatsapp-btn" data-phone="211923910255">
+                                <i class="fab fa-whatsapp"></i>
+                                WhatsApp
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Add more East Africa chapters following the same pattern -->
+                </div>
+
+                <!-- No Results Message -->
+                <div class="no-results" style="display: none;">
+                    <i class="fas fa-search"></i>
+                    <h4>No chapters found</h4>
+                    <p>Try adjusting your search or filter to find what you're looking for.</p>
+                </div>
+            </div>
+
+            <!-- Quick Contact CTA -->
+            <div class="contact-cta">
+                <div class="cta-content">
+                    <h3>Can't Find a Chapter Near You?</h3>
+                    <p>We're constantly expanding! If there's no HOREMOW chapter in your area yet, contact us about
+                        starting one or join our online community.</p>
+                    <div class="cta-buttons">
+                        <a href="#contact" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Start a Chapter
+                        </a>
+                        <a href="#contact" class="btn btn-outline">
+                            <i class="fas fa-question-circle"></i>
+                            Get More Info
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sermons Section -->
+    <!-- Enhanced Sermons Section -->
     <section id="sermons" class="section sermons">
         <div class="container">
             <h2 class="section-title">Sermons</h2>
             <p class="section-subtitle">Nourish Your Spirit with the Word</p>
 
+            <!-- Sermons Filter -->
+            <div class="sermons-filter">
+                <button class="filter-btn active" data-filter="all">All Sermons</button>
+                <button class="filter-btn" data-filter="pst-paul">Pastor Paul Rika</button>
+                <button class="filter-btn" data-filter="pst-anthony">Pastor Anthony Azi</button>
+                <button class="filter-btn" data-filter="pst-susan">Pastor Susan Azi</button>
+                <button class="filter-btn" data-filter="testimony">Testimonies</button>
+            </div>
+
+            <!-- Sermons Search -->
+            <div class="sermons-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="sermonSearch" placeholder="Search sermons by title or topic...">
+                </div>
+            </div>
+
+            <!-- Sermons Statistics -->
+            <div class="sermons-stats">
+                <div class="stat">
+                    <span class="number" id="totalSermons">12</span>
+                    <span class="label">Total Sermons</span>
+                </div>
+                <div class="stat">
+                    <span class="number" id="recentSermons">3</span>
+                    <span class="label">This Month</span>
+                </div>
+                <div class="stat">
+                    <span class="number">4</span>
+                    <span class="label">Speakers</span>
+                </div>
+            </div>
+
+            <!-- Sermons Grid -->
             <div class="sermons-grid">
-                <div class="sermon-card">
+                <div class="sermon-card" data-preacher="pst-anthony" data-category="holiness">
                     <div class="sermon-thumbnail">
-                        <img src="https://placehold.co/400x225/4a6572/ffffff?text=Sermon+Thumbnail"
-                            alt="Sermon Thumbnail">
+                        <img src="https://placehold.co/400x225/2c5530/ffffff?text=The+Path+to+Righteousness"
+                            alt="The Path to Righteousness">
                         <div class="play-btn">
                             <i class="fas fa-play"></i>
                         </div>
+                        <div class="sermon-duration">45:22</div>
                     </div>
                     <div class="sermon-info">
+                        <div class="sermon-category">Holiness</div>
                         <h3>The Path to Righteousness</h3>
-                        <p class="sermon-preacher">By Pastor Anthony Azi</p>
-                        <p class="sermon-date">June 15, 2023</p>
+                        <p class="sermon-preacher">
+                            <i class="fas fa-user"></i>
+                            By Pastor Anthony Azi
+                        </p>
+                        <p class="sermon-date">
+                            <i class="far fa-calendar"></i>
+                            June 15, 2023
+                        </p>
+                        <p class="sermon-description">Understanding the biblical path to true righteousness and how to
+                            walk in it daily.</p>
+                        <div class="sermon-actions">
+                            <a href="#" class="action-btn watch-btn">
+                                <i class="fas fa-play-circle"></i>
+                                Watch
+                            </a>
+                            <a href="#" class="action-btn audio-btn">
+                                <i class="fas fa-headphones"></i>
+                                Audio
+                            </a>
+                            <button class="action-btn share-btn">
+                                <i class="fas fa-share"></i>
+                                Share
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="sermon-card">
+                <div class="sermon-card" data-preacher="pst-susan" data-category="holiness">
                     <div class="sermon-thumbnail">
-                        <img src="https://placehold.co/400x225/4a6572/ffffff?text=Sermon+Thumbnail"
-                            alt="Sermon Thumbnail">
+                        <img src="https://placehold.co/400x225/2c5530/ffffff?text=Living+in+Holiness"
+                            alt="Living in Holiness">
                         <div class="play-btn">
                             <i class="fas fa-play"></i>
                         </div>
+                        <div class="sermon-duration">38:15</div>
                     </div>
                     <div class="sermon-info">
+                        <div class="sermon-category">Holiness</div>
                         <h3>Living in Holiness</h3>
-                        <p class="sermon-preacher">By Pastor Susan Azi</p>
-                        <p class="sermon-date">June 8, 2023</p>
+                        <p class="sermon-preacher">
+                            <i class="fas fa-user"></i>
+                            By Pastor Susan Azi
+                        </p>
+                        <p class="sermon-date">
+                            <i class="far fa-calendar"></i>
+                            June 8, 2023
+                        </p>
+                        <p class="sermon-description">Practical teachings on maintaining holiness in everyday life and
+                            relationships.</p>
+                        <div class="sermon-actions">
+                            <a href="#" class="action-btn watch-btn">
+                                <i class="fas fa-play-circle"></i>
+                                Watch
+                            </a>
+                            <a href="#" class="action-btn audio-btn">
+                                <i class="fas fa-headphones"></i>
+                                Audio
+                            </a>
+                            <button class="action-btn share-btn">
+                                <i class="fas fa-share"></i>
+                                Share
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="sermon-card">
+                <div class="sermon-card" data-preacher="pst-paul" data-category="end-times">
                     <div class="sermon-thumbnail">
-                        <img src="https://placehold.co/400x225/4a6572/ffffff?text=Sermon+Thumbnail"
-                            alt="Sermon Thumbnail">
+                        <img src="https://placehold.co/400x225/2c5530/ffffff?text=Preparing+for+the+Rapture"
+                            alt="Preparing for the Rapture">
                         <div class="play-btn">
                             <i class="fas fa-play"></i>
                         </div>
+                        <div class="sermon-duration">52:40</div>
                     </div>
                     <div class="sermon-info">
+                        <div class="sermon-category">End Times</div>
                         <h3>Preparing for the Rapture</h3>
-                        <p class="sermon-preacher">By Pastor Paul Rika</p>
-                        <p class="sermon-date">May 30, 2023</p>
+                        <p class="sermon-preacher">
+                            <i class="fas fa-user"></i>
+                            By Pastor Paul Rika
+                        </p>
+                        <p class="sermon-date">
+                            <i class="far fa-calendar"></i>
+                            May 30, 2023
+                        </p>
+                        <p class="sermon-description">Biblical insights on preparing for the rapture and living with
+                            eternal perspective.</p>
+                        <div class="sermon-actions">
+                            <a href="#" class="action-btn watch-btn">
+                                <i class="fas fa-play-circle"></i>
+                                Watch
+                            </a>
+                            <a href="#" class="action-btn audio-btn">
+                                <i class="fas fa-headphones"></i>
+                                Audio
+                            </a>
+                            <button class="action-btn share-btn">
+                                <i class="fas fa-share"></i>
+                                Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sermon-card" data-preacher="testimony" data-category="testimony">
+                    <div class="sermon-thumbnail">
+                        <img src="https://placehold.co/400x225/2c5530/ffffff?text=Heaven+and+Hell+Revelation"
+                            alt="Heaven and Hell Revelation">
+                        <div class="play-btn">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="sermon-duration">28:33</div>
+                    </div>
+                    <div class="sermon-info">
+                        <div class="sermon-category">Testimony</div>
+                        <h3>Heaven and Hell Revelation</h3>
+                        <p class="sermon-preacher">
+                            <i class="fas fa-user"></i>
+                            By Sister Linda Paul Rika
+                        </p>
+                        <p class="sermon-date">
+                            <i class="far fa-calendar"></i>
+                            May 15, 2023
+                        </p>
+                        <p class="sermon-description">Powerful testimony of divine encounter with the realities of
+                            eternity.</p>
+                        <div class="sermon-actions">
+                            <a href="#" class="action-btn watch-btn">
+                                <i class="fas fa-play-circle"></i>
+                                Watch
+                            </a>
+                            <a href="#" class="action-btn audio-btn">
+                                <i class="fas fa-headphones"></i>
+                                Audio
+                            </a>
+                            <button class="action-btn share-btn">
+                                <i class="fas fa-share"></i>
+                                Share
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="youtube-channel">
-                <h3>Visit Our Headquarters YouTube Channel</h3>
-                <p>For more sermons and resources from our International Director, Pastor Paul Rika, and the global
-                    ministry</p>
-                <a href="#" class="btn btn-youtube">
-                    <i class="fab fa-youtube"></i> Subscribe on YouTube
-                </a>
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button class="btn btn-outline" id="loadMoreSermons">
+                    <i class="fas fa-redo"></i>
+                    Load More Sermons
+                </button>
+            </div>
+
+            <!-- YouTube Integration -->
+            <div class="youtube-integration">
+                <div class="youtube-channel">
+                    <div class="youtube-header">
+                        <div class="youtube-icon">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>HOREMOW Headquarters YouTube Channel</h3>
+                            <p>Access more sermons and resources from our International Director, Pastor Paul Rika</p>
+                        </div>
+                    </div>
+                    <div class="youtube-stats">
+                        <div class="youtube-stat">
+                            <span class="number">1.2K+</span>
+                            <span class="label">Subscribers</span>
+                        </div>
+                        <div class="youtube-stat">
+                            <span class="number">50+</span>
+                            <span class="label">Videos</span>
+                        </div>
+                        <div class="youtube-stat">
+                            <span class="number">10K+</span>
+                            <span class="label">Views</span>
+                        </div>
+                    </div>
+                    <div class="youtube-actions">
+                        <a href="[YOUR_YOUTUBE_CHANNEL_LINK]" class="btn btn-youtube" target="_blank">
+                            <i class="fab fa-youtube"></i>
+                            Visit Our Channel
+                        </a>
+                        <a href="[YOUR_YOUTUBE_SUBSCRIBE_LINK]" class="btn btn-subscribe" target="_blank">
+                            <i class="fas fa-bell"></i>
+                            Subscribe
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Featured YouTube Video -->
+                <div class="featured-video">
+                    <h4>Featured Sermon</h4>
+                    <div class="video-container">
+                        <div class="video-placeholder">
+                            <img src="https://placehold.co/800x450/2c5530/ffffff?text=Featured+Sermon+Video"
+                                alt="Featured Sermon">
+                            <div class="play-btn large">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h5>The Power of Holiness in Last Days</h5>
+                        <p>By Pastor Paul Rika • 2.5K views • 1 week ago</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
+
+
+
     <!-- Books Section -->
+    <!-- Enhanced Books Section -->
     <section id="books" class="section books">
         <div class="container">
             <h2 class="section-title">Books & Literature</h2>
-            <p class="section-subtitle">Resources for Spiritual Growth</p>
+            <p class="section-subtitle">Resources for Spiritual Growth - Available on Our App</p>
 
             <div class="books-grid">
                 <div class="book-card">
                     <div class="book-cover">
-                        <img src="https://placehold.co/250x350/4a6572/ffffff?text=Escaping+Hell+Fire" alt="Book Cover">
+                        <img src="https://placehold.co/250x350/4a6572/ffffff?text=Escaping+Hell+Fire"
+                            alt="Escaping Hell Fire Book Cover">
+                        <div class="app-badge">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Available on App</span>
+                        </div>
                     </div>
                     <div class="book-info">
                         <h3>Escaping Hell Fire and Entering Heaven Made Simple</h3>
                         <p class="book-author">By Pastor Paul Rika</p>
                         <p class="book-description">A powerful guide on the requirements for salvation and escaping
                             eternal damnation.</p>
+                        <div class="app-links">
+                            <a href="[YOUR_GOOGLE_PLAY_LINK]" class="app-link play-store" target="_blank">
+                                <i class="fab fa-google-play"></i>
+                                <span>Get on Google Play</span>
+                            </a>
+                            <a href="[YOUR_APP_STORE_LINK]" class="app-link app-store" target="_blank">
+                                <i class="fab fa-apple"></i>
+                                <span>Download on App Store</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="book-card">
                     <div class="book-cover">
                         <img src="https://placehold.co/250x350/4a6572/ffffff?text=The+Path+to+Holiness"
-                            alt="Book Cover">
+                            alt="The Path to Holiness Book Cover">
+                        <div class="app-badge">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Available on App</span>
+                        </div>
                     </div>
                     <div class="book-info">
                         <h3>The Path to Holiness</h3>
                         <p class="book-author">By Pastor Anthony Azi</p>
                         <p class="book-description">Practical teachings on living a holy life in today's world.</p>
+                        <div class="app-links">
+                            <a href="[YOUR_GOOGLE_PLAY_LINK]" class="app-link play-store" target="_blank">
+                                <i class="fab fa-google-play"></i>
+                                <span>Get on Google Play</span>
+                            </a>
+                            <a href="[YOUR_APP_STORE_LINK]" class="app-link app-store" target="_blank">
+                                <i class="fab fa-apple"></i>
+                                <span>Download on App Store</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="book-card">
                     <div class="book-cover">
                         <img src="https://placehold.co/250x350/4a6572/ffffff?text=Heaven+and+Hell+Revelation"
-                            alt="Book Cover">
+                            alt="Heaven and Hell Revelation Book Cover">
+                        <div class="app-badge">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Available on App</span>
+                        </div>
                     </div>
                     <div class="book-info">
                         <h3>Heaven and Hell Revelation</h3>
                         <p class="book-author">By Sister Linda Paul Rika</p>
                         <p class="book-description">A testimony of divine encounter with the realities of eternity.</p>
+                        <div class="app-links">
+                            <a href="[YOUR_GOOGLE_PLAY_LINK]" class="app-link play-store" target="_blank">
+                                <i class="fab fa-google-play"></i>
+                                <span>Get on Google Play</span>
+                            </a>
+                            <a href="[YOUR_APP_STORE_LINK]" class="app-link app-store" target="_blank">
+                                <i class="fab fa-apple"></i>
+                                <span>Download on App Store</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="books-info">
-                <h3>How to Get Our Books</h3>
-                <p>We are committed to making these holiness materials available to all. To get your copies, please:</p>
+                <h3>How to Access Our Books</h3>
+                <p>We are committed to making these holiness materials available to all. You can access our books
+                    through:</p>
                 <div class="acquisition-methods">
                     <div class="method">
-                        <i class="fas fa-church"></i>
-                        <p>Visit us at our Lugala chapter during any of our service times.</p>
+                        <div class="method-icon">
+                            <i class="fab fa-google-play"></i>
+                        </div>
+                        <h4>Google Play Store</h4>
+                        <p>Download our app from Google Play Store to access all books on your Android device</p>
                     </div>
                     <div class="method">
-                        <i class="fas fa-phone"></i>
-                        <p>Contact us via phone or WhatsApp using the contact details below.</p>
+                        <div class="method-icon">
+                            <i class="fab fa-apple"></i>
+                        </div>
+                        <h4>Apple App Store</h4>
+                        <p>Get our app from App Store to read all books on your iPhone or iPad</p>
                     </div>
                     <div class="method">
-                        <i class="fas fa-users"></i>
-                        <p>Approach your nearest Chapter/Unit Leader from our list on the Chapters page.</p>
+                        <div class="method-icon">
+                            <i class="fas fa-church"></i>
+                        </div>
+                        <h4>Physical Copies</h4>
+                        <p>Visit us at our Lugala chapter during service times for physical copies</p>
+                    </div>
+                </div>
+
+                <div class="app-cta">
+                    <h4>Get the HOREMOW App Today!</h4>
+                    <p>Access all our books, sermons, and resources in one place</p>
+                    <div class="app-cta-buttons">
+                        <a href="[YOUR_GOOGLE_PLAY_LINK]" class="btn btn-play-store" target="_blank">
+                            <i class="fab fa-google-play"></i>
+                            <div>
+                                <span>GET IT ON</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                        <a href="[YOUR_APP_STORE_LINK]" class="btn btn-app-store" target="_blank">
+                            <i class="fab fa-apple"></i>
+                            <div>
+                                <span>Download on the</span>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
+
+
+
+    <!-- Enhanced Contact Section with Map -->
     <section id="contact" class="section contact">
         <div class="container">
             <h2 class="section-title">Contact Us</h2>
+            <p class="section-subtitle">Visit us at our Lugala headquarters or get in touch online</p>
 
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Get In Touch</h3>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h4>Location</h4>
-                            <p>Lugala, Kampala, Uganda</p>
+            <div class="contact-hero">
+                <div class="map-container">
+                    <!-- Map Background with Pinned Location -->
+                    <div class="map-background">
+                        <div class="map-image">
+                            <!-- Using a static map image from Google Maps -->
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27630.78072333133!2d32.51412662658504!3d0.3392644020697131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbb000d9c599b%3A0xf73f393463d7d059!2sHOREMOW%20HQ%20UGANDA!5e1!3m2!1sen!2sug!4v1763462516422!5m2!1sen!2sug"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>alt="HOREMOW Lugala Location Map"
+                            onerror="this.src='https://placehold.co/800x400/4a6572/ffffff?text=HOREMOW+Lugala+Location'">
+                        </div>
+                        <div class="map-pin">
+                            <div class="pin-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="pin-label">
+                                <strong>HOREMOW Uganda</strong>
+                                <span>Lugala, Kampala</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+256 775 633652 (Pastor Anthony Azi)</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>Email</h4>
-                            <p>info@horemowuganda.org</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <h4>Service Times</h4>
-                            <p>Tuesday: 4pm - 7pm<br>Saturday: 2pm - 6pm<br>Sunday: 2pm - 6pm</p>
-                        </div>
+
+                    <div class="map-actions">
+                        <a href="https://maps.app.goo.gl/HkKAkGMo2Xk9Mzxi9" class="btn btn-map" target="_blank">
+                            <i class="fas fa-directions"></i>
+                            Get Directions on Google Maps
+                        </a>
+                        <button class="btn btn-outline" onclick="copyAddress()">
+                            <i class="fas fa-copy"></i>
+                            Copy Address
+                        </button>
                     </div>
                 </div>
 
-                <div class="contact-form">
-                    <h3>Send Us a Message</h3>
-                    <form id="messageForm">
-                        <div class="form-group">
-                            <input type="text" id="name" placeholder="Your Name" required>
+                <div class="contact-content">
+                    <div class="contact-info-card">
+                        <h3>Get In Touch</h3>
+
+                        <div class="contact-info-grid">
+                            <div class="contact-item highlighted">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4>Our Location</h4>
+                                    <p>Lugala, Kampala, Uganda</p>
+                                    <small>East Africa Headquarters</small>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4>Phone & WhatsApp</h4>
+                                    <div class="contact-numbers">
+                                        <a href="tel:+256775633652">+256 775 633652</a>
+                                        <span class="contact-label">Pastor Anthony Azi</span>
+                                    </div>
+                                    <div class="contact-numbers">
+                                        <a href="tel:+256783538438">+256 783 538438</a>
+                                        <span class="contact-label">Pastor Wilberforce</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4>Email Us</h4>
+                                    <a href="mailto:info@horemowuganda.org">info@horemowuganda.org</a>
+                                    <a
+                                        href="mailto:pasto.anthony@horemowuganda.org">pastor.anthony@horemowuganda.org</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4>Service Times</h4>
+                                    <div class="service-times">
+                                        <div class="service-day">
+                                            <span class="day">Tuesday</span>
+                                            <span class="time">4pm - 7pm</span>
+                                        </div>
+                                        <div class="service-day">
+                                            <span class="day">Saturday</span>
+                                            <span class="time">2pm - 6pm</span>
+                                        </div>
+                                        <div class="service-day">
+                                            <span class="day">Sunday</span>
+                                            <span class="time">2pm - 6pm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="email" id="email" placeholder="Your Email" required>
+
+                        <div class="quick-actions">
+                            <h4>Quick Actions</h4>
+                            <div class="action-buttons">
+                                <a href="tel:+256775633652" class="action-btn call-btn">
+                                    <i class="fas fa-phone"></i>
+                                    Call Now
+                                </a>
+                                <a href="https://wa.me/256775633652" class="action-btn whatsapp-btn" target="_blank">
+                                    <i class="fab fa-whatsapp"></i>
+                                    WhatsApp
+                                </a>
+                                <a href="mailto:info@horemowuganda.org" class="action-btn email-btn">
+                                    <i class="fas fa-envelope"></i>
+                                    Email
+                                </a>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" id="subject" placeholder="Subject" required>
+                    </div>
+
+                    <div class="contact-form-card">
+                        <div class="form-header">
+                            <h3>Send Us a Message</h3>
+                            <p>Have questions or prayer requests? We'd love to hear from you.</p>
                         </div>
-                        <div class="form-group">
-                            <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
+
+                        <form id="messageForm" class="enhanced-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Your Name *</label>
+                                    <input type="text" id="name" placeholder="Enter your full name" required>
+                                    <i class="fas fa-user input-icon"></i>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" placeholder="your.email@example.com" required>
+                                    <i class="fas fa-envelope input-icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject">Subject *</label>
+                                <select id="subject" required>
+                                    <option value="">Select a topic</option>
+                                    <option value="prayer-request">Prayer Request</option>
+                                    <option value="general-inquiry">General Inquiry</option>
+                                    <option value="chapter-information">Chapter Information</option>
+                                    <option value="book-request">Book Request</option>
+                                    <option value="partnership">Partnership Opportunity</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <i class="fas fa-chevron-down input-icon"></i>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Your Message *</label>
+                                <textarea id="message"
+                                    placeholder="Please share your message, prayer request, or question..." rows="6"
+                                    required></textarea>
+                                <i class="fas fa-comment input-icon textarea-icon"></i>
+                            </div>
+
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary btn-large">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send Message
+                                </button>
+                                <p class="form-note">We typically respond within 24 hours</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Contact Methods -->
+            <div class="contact-methods">
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-church"></i>
+                    </div>
+                    <h4>Visit in Person</h4>
+                    <p>Join us during our service times at Lugala Chapter for fellowship and worship</p>
+                    <div class="method-meta">
+                        <i class="fas fa-users"></i>
+                        <span>All are welcome</span>
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-pray"></i>
+                    </div>
+                    <h4>Prayer Requests</h4>
+                    <p>Submit urgent prayer requests that will be shared with our prayer team</p>
+                    <div class="method-meta">
+                        <i class="fas fa-clock"></i>
+                        <span>24/7 Prayer Support</span>
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h4>Online Services</h4>
+                    <p>Can't visit in person? Join our live services on YouTube</p>
+                    <div class="method-meta">
+                        <i class="fab fa-youtube"></i>
+                        <span>Live every Sunday</span>
+                    </div>
                 </div>
             </div>
         </div>
