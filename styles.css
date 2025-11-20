@@ -2308,17 +2308,42 @@ img {
 
 
 /* Contact Section */
-/* Enhanced Contact Section */
-/* In your CSS, update the .contact section */
+
+/* Enhanced Contact Section with Globe Background */
 .contact {
-    background: linear-gradient(rgba(62, 74, 65, 0.9), rgba(83, 92, 86, 0.9)),
-        url('https://cdn.pixabay.com/photo/2018/05/08/13/56/globe-3383088_1280.jpg') center/cover no-repeat;
+    background:
+        linear-gradient(rgba(44, 85, 48, 0.85), rgba(30, 58, 35, 0.9)),
+        url('https://cdn.pixabay.com/photo/2018/05/08/13/56/globe-3383088_1280.jpg') center/cover no-repeat fixed;
     position: relative;
-    background-attachment: fixed;
+    color: var(--white);
 }
 
-.contact-hero {
-    margin-bottom: 4rem;
+/* Update text colors for better contrast on dark background */
+.contact .section-title,
+.contact .section-subtitle {
+    color: var(--white);
+}
+
+.contact .section-title::after {
+    background-color: var(--secondary);
+}
+
+/* Make content cards more transparent to show background */
+.contact-info-card,
+.contact-form-card,
+.method-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Update map container to match */
+.map-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Map Container */
@@ -4462,8 +4487,4 @@ img {
     .channel-actions {
         flex-direction: column;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f84f59d7e210f2d83cef7b5945b1177e5c5c6df8
