@@ -1314,4 +1314,8 @@ style.textContent = `
         font-size: 0.9rem;
     }
 `;
+<<<<<<< HEAD
 document.head.appendChild(style);
+=======
+document.head.appendChild(style);
+>>>>>>> f84f59d7e210f2d83cef7b5945b1177e5c5c6df8
