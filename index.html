@@ -151,7 +151,7 @@
                         </div>
 
                         <div class="offline-actions">
-                            <a href="[YOUR_YOUTUBE_CHANNEL_LINK]" class="btn btn-youtube" target="_blank"
+                            <a href="https://www.youtube.com/@HOREMOWUGANDA" class="btn btn-youtube" target="_blank"
                                 id="channel-link">
                                 <i class="fab fa-youtube"></i>
                                 Visit Our YouTube Channel
@@ -171,7 +171,7 @@
                         <h3>Unable to Load Stream</h3>
                         <p>There was an error checking our live status. Please try again later.</p>
                         <div class="error-actions">
-                            <a href="[YOUR_YOUTUBE_CHANNEL_LINK]" class="btn btn-youtube" target="_blank">
+                            <a href="https://www.youtube.com/@HOREMOWUGANDA" class="btn btn-youtube" target="_blank">
                                 <i class="fab fa-youtube"></i>
                                 Go to YouTube Channel
                             </a>
@@ -559,11 +559,27 @@
             <h2 class="section-title">Events & Services</h2>
             <p class="section-subtitle">Stay connected with our ministry activities</p>
 
-            <!-- Calendar View Toggle -->
-            <div class="calendar-view-toggle">
-                <button class="view-btn active" data-view="month">Month View</button>
-                <button class="view-btn" data-view="list">List View</button>
-                <button class="view-btn" data-view="upcoming">Upcoming</button>
+            <!-- Calendar Controls -->
+            <div class="calendar-controls">
+                <!-- View Toggle -->
+                <div class="calendar-view-toggle">
+                    <button class="view-btn active" data-view="month">
+                        <i class="fas fa-calendar-alt"></i> Month View
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i> List View
+                    </button>
+                    <button class="view-btn" data-view="upcoming">
+                        <i class="fas fa-clock"></i> Upcoming
+                    </button>
+                </div>
+
+                <!-- Sync Controls -->
+                <div class="sync-controls">
+                    <button id="refresh-events" class="btn btn-sm btn-outline">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
             </div>
 
             <!-- Calendar Container -->
@@ -586,6 +602,10 @@
 
                 <!-- List View -->
                 <div class="list-view">
+                    <div class="events-list-header">
+                        <h4>All Events</h4>
+                        <span class="events-count" id="events-count">0 events</span>
+                    </div>
                     <div class="events-list" id="events-list">
                         <!-- Events will be populated by JavaScript -->
                     </div>
@@ -593,24 +613,33 @@
 
                 <!-- Upcoming Events -->
                 <div class="upcoming-view">
+                    <div class="upcoming-header">
+                        <h4>Next 5 Events</h4>
+                    </div>
                     <div class="upcoming-events" id="upcoming-events">
                         <!-- Next 5 events will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
 
-            <!-- Google Calendar Sync Status -->
-            <div class="sync-status">
-                <p>
-                    <i class="fas fa-sync-alt"></i>
-                    Events automatically sync with our Google Calendar
+            <!-- Connection Status -->
+            <div class="connection-status" id="connection-status">
+                <div class="status-indicator connected">
+                    <i class="fas fa-wifi"></i>
+                    <span>Connected to Church Calendar</span>
+                </div>
+                <div class="status-details">
                     <span id="last-sync">Last updated: Just now</span>
-                </p>
+                    <span id="events-loaded">• 0 events loaded</span>
+                </div>
             </div>
 
-            <!-- Add to Calendar Buttons -->
-            <div class="calendar-links">
-                <h4>Subscribe to Our Calendar</h4>
+            <!-- Calendar Subscription -->
+            <div class="calendar-subscription">
+                <div class="subscription-header">
+                    <h4><i class="fas fa-calendar-plus"></i> Subscribe to Our Calendar</h4>
+                    <p>Get automatic updates when new events are added</p>
+                </div>
                 <div class="subscribe-buttons">
                     <a href="#" class="btn btn-google-calendar" target="_blank" id="google-calendar-link">
                         <i class="fab fa-google"></i>
@@ -618,7 +647,7 @@
                     </a>
                     <button class="btn btn-outline" id="download-ical">
                         <i class="fas fa-download"></i>
-                        Download iCal
+                        Download iCal File
                     </button>
                 </div>
             </div>
@@ -819,17 +848,13 @@
                             </div>
                         </div>
                         <div class="chapter-actions">
-                            <button class="action-btn contact-btn" data-phone="256775633652">
+                            <button class="action-btn contact-btn" data-phone="256783538438">
                                 <i class="fas fa-phone"></i>
                                 Call
                             </button>
-                            <button class="action-btn whatsapp-btn" data-phone="256775633652">
+                            <button class="action-btn whatsapp-btn" data-phone="256783538438">
                                 <i class="fab fa-whatsapp"></i>
                                 WhatsApp
-                            </button>
-                            <button class="action-btn directions-btn">
-                                <i class="fas fa-directions"></i>
-                                Directions
                             </button>
                         </div>
                     </div>
@@ -1709,6 +1734,78 @@
             </div>
         </div>
     </footer>
+
+    <!-- Chatbot Widget - Add this to your website -->
+    <!DOCTYPE html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+
+    <!-- Chatbot Widget - Add this to your website -->
+    <div class="chatbot-widget">
+        <!-- Auto-popup notification -->
+        <div class="popup-notification" id="popupNotification">
+            <div class="popup-header">
+                <i class="fas fa-robot" style="color: #4a6da7; font-size: 1.2rem;"></i>
+                <h4>Church Assistant</h4>
+            </div>
+            <div class="popup-message">
+                Hello! Welcome to our church. Need help with service times or location? I'm here to assist you!
+            </div>
+            <div class="popup-actions">
+                <button class="popup-btn secondary" id="closePopup">Maybe later</button>
+                <button class="popup-btn primary" id="startChat">Let's chat</button>
+            </div>
+        </div>
+
+        <!-- Chatbot icon with notification badge -->
+        <div class="chatbot-icon" id="chatbotIcon">
+            <i class="fas fa-hands-praying"></i>
+            <div class="notification-badge" id="notificationBadge">1</div>
+        </div>
+
+        <!-- Chatbot container -->
+        <div class="chatbot-container" id="chatbotContainer">
+            <div class="chat-header">
+                <h3><i class="fas fa-robot"></i> Church Assistant</h3>
+                <button class="close-btn" id="closeChat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    Hello and welcome! 🙏 How can I assist you today?
+                </div>
+                <div class="message bot-message">
+                    I can help with service times, location, events, or connect you with our team.
+                </div>
+            </div>
+            <div class="quick-replies" id="quickReplies">
+                <div class="quick-reply" onclick="sendQuickReply('Service Times')">Service Times</div>
+                <div class="quick-reply" onclick="sendQuickReply('Location')">Location</div>
+                <div class="quick-reply" onclick="sendQuickReply('Events')">Upcoming Events</div>
+                <div class="quick-reply" onclick="sendQuickReply('Prayer')">Prayer Request</div>
+            </div>
+            <a href="https://wa.me/256709461146" class="whatsapp-fallback" target="_blank">
+                <i class="fab fa-whatsapp"></i> Chat with Pastor on WhatsApp
+            </a>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+
+
+
+
+
 
     <script src="script.js"></script>
 </body>
