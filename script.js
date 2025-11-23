@@ -3,304 +3,20 @@
 // Developer signature - KnDjoshua
 console.log('HOREMOW Website - Developed by KnDjoshua');
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Mobile Navigation Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navList = document.querySelector('.nav-list');
-
-    hamburger.addEventListener('click', function () {
-        this.classList.toggle('active');
-        navList.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking on a link
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            hamburger.classList.remove('active');
-            navList.classList.remove('active');
-
-            // Update active nav link
-            navLinks.forEach(item => item.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
-    // Accordion functionality for beliefs section
-    const accordionItems = document.querySelectorAll('.accordion-item');
-
-    accordionItems.forEach(item => {
-        const header = item.querySelector('.accordion-header');
-
-        header.addEventListener('click', function () {
-            // Close all other accordion items
-            accordionItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                }
-            });
-
-            // Toggle current item
-            item.classList.toggle('active');
-        });
-    });
-
-    // Tab functionality for chapters section
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', function () {
-            const tabId = this.getAttribute('data-tab');
-
-            // Remove active class from all buttons and contents
-            tabBtns.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-
-            // Add active class to current button and corresponding content
-            this.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-        });
-    });
-
-    // Form submission
-    const contactForm = document.getElementById('messageForm');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            // Get form data
-            const formData = new FormData(this);
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-
-            // Simple validation
-            if (!name || !email || !subject || !message) {
-                alert('Please fill in all fields');
-                return;
-            }
-
-            // In a real application, you would send this data to a server
-            // For now, we'll just show a success message
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
-    }
-
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = targetElement.offsetTop - headerHeight;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // Header scroll effect
-    window.addEventListener('scroll', function () {
-        const header = document.querySelector('.header');
-        if (window.scrollY > 100) {
-            header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-        } else {
-            header.style.backgroundColor = 'var(--white)';
-            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-        }
-    });
-
-    // Set active nav link based on scroll position
-    function setActiveNavLink() {
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        let currentSection = '';
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            const headerHeight = document.querySelector('.header').offsetHeight;
-
-            if (window.scrollY >= (sectionTop - headerHeight - 50)) {
-                currentSection = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSection}`) {
-                link.classList.add('active');
-            }
-        });
-    }
-
-    window.addEventListener('scroll', setActiveNavLink);
-
-    // Animation on scroll
-    function animateOnScroll() {
-        const elements = document.querySelectorAll('.aim-card, .pastor-card, .sermon-card, .book-card');
-
-        elements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
-
-            if (elementTop < window.innerHeight - elementVisible) {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }
-        });
-    }
-
-    // Set initial state for animated elements
-    document.querySelectorAll('.aim-card, .pastor-card, .sermon-card, .book-card').forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(20px)';
-        element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    });
-
-    window.addEventListener('scroll', animateOnScroll);
-    // Trigger once on load
-    animateOnScroll();
-});
-
-
-
-
-// sermon
-// Sermons Filtering and Search Functionality
-document.addEventListener('DOMContentLoaded', function () {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const sermonCards = document.querySelectorAll('.sermon-card');
-    const searchInput = document.getElementById('sermonSearch');
-    const loadMoreBtn = document.getElementById('loadMoreSermons');
-
-    let visibleSermons = 4; // Initial number of sermons to show
-
-    // Filter functionality
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function () {
-            const filter = this.getAttribute('data-filter');
-
-            // Update active button
-            filterBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-
-            // Filter sermons
-            sermonCards.forEach(card => {
-                if (filter === 'all' || card.getAttribute('data-preacher') === filter) {
-                    card.style.display = 'block';
-                    setTimeout(() => card.classList.remove('hidden'), 10);
-                } else {
-                    card.classList.add('hidden');
-                    setTimeout(() => card.style.display = 'none', 300);
-                }
-            });
-
-            // Reset visible count when filtering
-            visibleSermons = 4;
-            updateLoadMoreButton();
-        });
-    });
-
-    // Search functionality
-    searchInput.addEventListener('input', function () {
-        const searchTerm = this.value.toLowerCase();
-
-        sermonCards.forEach(card => {
-            const title = card.querySelector('h3').textContent.toLowerCase();
-            const description = card.querySelector('.sermon-description').textContent.toLowerCase();
-            const preacher = card.querySelector('.sermon-preacher').textContent.toLowerCase();
-
-            if (title.includes(searchTerm) || description.includes(searchTerm) || preacher.includes(searchTerm)) {
-                card.style.display = 'block';
-                setTimeout(() => card.classList.remove('hidden'), 10);
-            } else {
-                card.classList.add('hidden');
-                setTimeout(() => card.style.display = 'none', 300);
-            }
-        });
-    });
-
-    // Load more functionality
-    function updateLoadMoreButton() {
-        const visibleCards = document.querySelectorAll('.sermon-card:not(.hidden)');
-        if (visibleCards.length <= visibleSermons) {
-            loadMoreBtn.style.display = 'none';
-        } else {
-            loadMoreBtn.style.display = 'block';
-        }
-
-        // Show/hide sermons based on count
-        visibleCards.forEach((card, index) => {
-            if (index < visibleSermons) {
-                card.style.display = 'block';
-                setTimeout(() => card.classList.remove('hidden'), 10);
-            } else {
-                card.classList.add('hidden');
-                setTimeout(() => card.style.display = 'none', 300);
-            }
-        });
-    }
-
-    loadMoreBtn.addEventListener('click', function () {
-        visibleSermons += 4;
-        updateLoadMoreButton();
-    });
-
-    // Share button functionality
-    document.querySelectorAll('.share-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const card = this.closest('.sermon-card');
-            const title = card.querySelector('h3').textContent;
-            const url = window.location.href;
-
-            // Simple share functionality (can be enhanced with Web Share API)
-            if (navigator.share) {
-                navigator.share({
-                    title: title,
-                    url: url
-                });
-            } else {
-                // Fallback: copy to clipboard or show share options
-                alert(`Share "${title}" with others!`);
-            }
-        });
-    });
-
-    // Initialize
-    updateLoadMoreButton();
-});
-
-
-// events google calender
-
-// Google Calendar Integration
-// Events Calendar Functionality
+// Events Calendar Class with Public Google Calendar Integration
 class EventsCalendar {
     constructor() {
         this.currentDate = new Date();
         this.events = [];
+        // Your church calendar ID
+        this.calendarId = '9e8b3abdbc26f014002e5648281b6fcfd763c91e84540d9df3130a0e13ddfb97@group.calendar.google.com';
         this.init();
     }
 
     init() {
         this.setupEventListeners();
         this.generateCalendar();
-        this.loadSampleEvents(); // Replace with Google Calendar API later
+        this.loadGoogleCalendarEvents();
     }
 
     setupEventListeners() {
@@ -312,27 +28,251 @@ class EventsCalendar {
         });
 
         // Month navigation
-        document.querySelector('.prev-month').addEventListener('click', () => {
-            this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-            this.generateCalendar();
-        });
+        const prevMonthBtn = document.querySelector('.prev-month');
+        const nextMonthBtn = document.querySelector('.next-month');
 
-        document.querySelector('.next-month').addEventListener('click', () => {
-            this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-            this.generateCalendar();
-        });
+        if (prevMonthBtn) {
+            prevMonthBtn.addEventListener('click', () => {
+                this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+                this.generateCalendar();
+                this.loadGoogleCalendarEvents();
+            });
+        }
+
+        if (nextMonthBtn) {
+            nextMonthBtn.addEventListener('click', () => {
+                this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+                this.generateCalendar();
+                this.loadGoogleCalendarEvents();
+            });
+        }
 
         // Modal close
-        document.getElementById('modal-close').addEventListener('click', () => {
-            this.closeModal();
-        });
+        const modalClose = document.getElementById('modal-close');
+        if (modalClose) {
+            modalClose.addEventListener('click', () => {
+                this.closeModal();
+            });
+        }
 
         // Close modal when clicking outside
-        document.getElementById('event-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'event-modal') {
-                this.closeModal();
+        const eventModal = document.getElementById('event-modal');
+        if (eventModal) {
+            eventModal.addEventListener('click', (e) => {
+                if (e.target.id === 'event-modal') {
+                    this.closeModal();
+                }
+            });
+        }
+
+        // Refresh events
+        const refreshBtn = document.getElementById('refresh-events');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.refreshCalendar();
+            });
+        }
+
+        // Calendar subscription
+        const googleCalendarLink = document.getElementById('google-calendar-link');
+        if (googleCalendarLink) {
+            googleCalendarLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openGoogleCalendarSubscription();
+            });
+        }
+
+        const downloadIcal = document.getElementById('download-ical');
+        if (downloadIcal) {
+            downloadIcal.addEventListener('click', () => {
+                this.downloadICal();
+            });
+        }
+    }
+
+    async loadGoogleCalendarEvents() {
+        console.log('Loading events from Google Calendar...');
+        this.showLoading(true);
+
+        try {
+            // Get date range for current month view
+            const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+            const lastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
+
+            // Format dates for API
+            const timeMin = firstDay.toISOString();
+            const timeMax = lastDay.toISOString();
+
+            console.log('Fetching events from:', timeMin, 'to', timeMax);
+            console.log('Calendar ID:', this.calendarId);
+
+            // For public calendars - no API key needed
+            const response = await fetch(
+                `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(this.calendarId)}/events?` +
+                `timeMin=${timeMin}&` +
+                `timeMax=${timeMax}&` +
+                `singleEvents=true&` +
+                `orderBy=startTime&` +
+                `maxResults=50`
+            );
+
+            console.log('API Response status:', response.status);
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Events received:', data.items?.length || 0);
+
+                if (data.items && data.items.length > 0) {
+                    this.processGoogleEvents(data.items);
+                    this.updateConnectionStatus(true, `Loaded ${data.items.length} events from Google Calendar`);
+                } else {
+                    console.log('No events found in calendar, using sample events');
+                    this.loadSampleEvents();
+                    this.updateConnectionStatus(true, 'No events found - using sample events');
+                }
+            } else {
+                console.error('Calendar API error:', response.status, response.statusText);
+                throw new Error(`Calendar not accessible: ${response.status}`);
             }
+
+        } catch (error) {
+            console.error('Error loading Google Calendar events:', error);
+            this.loadSampleEvents();
+            this.updateConnectionStatus(false, 'Using sample events - calendar not accessible');
+        } finally {
+            this.showLoading(false);
+            this.updateLastSync();
+        }
+    }
+
+    processGoogleEvents(googleEvents) {
+        console.log('Processing Google events:', googleEvents);
+
+        this.events = googleEvents.map((event, index) => {
+            const startDate = event.start.dateTime || event.start.date;
+            const endDate = event.end.dateTime || event.end.date;
+
+            // Calculate duration
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const duration = Math.round((end - start) / (1000 * 60));
+
+            // Extract event details with defaults
+            const location = event.location || 'Lugala Chapter';
+            const description = event.description || 'Join us for this church event!';
+
+            // Smart preacher detection
+            let preacher = this.extractPreacherFromDescription(description);
+
+            // Smart event type classification
+            const type = this.classifyEventType(event.summary, description);
+
+            console.log('Processed event:', event.summary, 'on', startDate);
+
+            return {
+                id: event.id || `event-${index}`,
+                title: event.summary || 'Church Event',
+                description: description,
+                date: new Date(startDate),
+                endDate: new Date(endDate),
+                duration: duration,
+                location: location,
+                type: type,
+                preacher: preacher,
+                googleEvent: true,
+                htmlLink: event.htmlLink
+            };
         });
+
+        console.log('Final events array:', this.events);
+
+        // Update all views
+        this.generateCalendar();
+        this.renderListView();
+        this.renderUpcomingView();
+        this.updateEventsCount();
+    }
+
+    extractPreacherFromDescription(description) {
+        if (!description) return 'To be announced';
+
+        const preacherPatterns = [
+            /(?:preacher|speaker|pastor)[:\s]+([^\n.<]+)/i,
+            /(?:with|by)\s+([^\n.<]+?)(?:\s+leading|\s+preaching|$)/i,
+            /Pastor\s+([A-Z][a-z]+\s+[A-Z][a-z]+)/
+        ];
+
+        for (const pattern of preacherPatterns) {
+            const match = description.match(pattern);
+            if (match) {
+                return match[1].trim();
+            }
+        }
+
+        return 'To be announced';
+    }
+
+    classifyEventType(title, description) {
+        const text = (title + ' ' + (description || '')).toLowerCase();
+
+        if (text.includes('sunday service') || text.includes('worship service')) return 'service';
+        if (text.includes('bible study') || text.includes('study')) return 'study';
+        if (text.includes('prayer') || text.includes('praying')) return 'prayer';
+        if (text.includes('conference') || text.includes('revival')) return 'conference';
+        if (text.includes('fellowship') || text.includes('youth')) return 'fellowship';
+        if (text.includes('wedding')) return 'wedding';
+        if (text.includes('funeral')) return 'funeral';
+
+        return 'service';
+    }
+
+    loadSampleEvents() {
+        console.log('Loading sample events...');
+
+        // Create sample events for the current month
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth();
+
+        this.events = [
+            {
+                id: 1,
+                title: 'Sunday Service',
+                description: 'Join us for our weekly Sunday service with worship and preaching from God\'s word.',
+                date: new Date(currentYear, currentMonth, 15, 10, 0), // 15th of current month
+                duration: 120,
+                location: 'Lugala Chapter',
+                type: 'service',
+                preacher: 'Pastor Anthony Azi',
+                googleEvent: false
+            },
+            {
+                id: 2,
+                title: 'Bible Study',
+                description: 'Mid-week Bible study focusing on the Book of Romans. All are welcome.',
+                date: new Date(currentYear, currentMonth, 18, 18, 0), // 18th of current month
+                duration: 90,
+                location: 'Lugala Chapter',
+                type: 'study',
+                preacher: 'Pastor Susan Azi',
+                googleEvent: false
+            },
+            {
+                id: 3,
+                title: 'Prayer Meeting',
+                description: 'Corporate prayer meeting for the needs of the church and community.',
+                date: new Date(currentYear, currentMonth, 22, 17, 0), // 22nd of current month
+                duration: 60,
+                location: 'Lugala Chapter',
+                type: 'prayer',
+                preacher: 'Brother Benedict',
+                googleEvent: false
+            }
+        ];
+
+        this.generateCalendar();
+        this.renderListView();
+        this.renderUpcomingView();
+        this.updateEventsCount();
     }
 
     switchView(view) {
@@ -340,15 +280,20 @@ class EventsCalendar {
         document.querySelectorAll('.view-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`[data-view="${view}"]`).classList.add('active');
+        const activeBtn = document.querySelector(`[data-view="${view}"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+        }
 
         // Show selected view
-        document.querySelectorAll('.month-view, .list-view, .upcoming-view').forEach(view => {
-            view.classList.remove('active');
+        document.querySelectorAll('.month-view, .list-view, .upcoming-view').forEach(viewEl => {
+            viewEl.classList.remove('active');
         });
-        document.querySelector(`.${view}-view`).classList.add('active');
+        const activeView = document.querySelector(`.${view}-view`);
+        if (activeView) {
+            activeView.classList.add('active');
+        }
 
-        // Refresh data for the view
         if (view === 'list') {
             this.renderListView();
         } else if (view === 'upcoming') {
@@ -358,9 +303,13 @@ class EventsCalendar {
 
     generateCalendar() {
         const calendarGrid = document.getElementById('calendar-grid');
+        if (!calendarGrid) {
+            console.error('Calendar grid element not found!');
+            return;
+        }
+
         calendarGrid.innerHTML = '';
 
-        // Add day headers
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         days.forEach(day => {
             const dayHeader = document.createElement('div');
@@ -369,11 +318,11 @@ class EventsCalendar {
             calendarGrid.appendChild(dayHeader);
         });
 
-        // Update month header
-        document.getElementById('current-month').textContent =
-            this.currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+        const monthHeader = document.getElementById('current-month');
+        if (monthHeader) {
+            monthHeader.textContent = this.currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+        }
 
-        // Get first day of month and number of days
         const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
         const lastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
         const daysInMonth = lastDay.getDate();
@@ -386,7 +335,6 @@ class EventsCalendar {
             calendarGrid.appendChild(emptyDay);
         }
 
-        // Add days of current month
         const today = new Date();
         for (let day = 1; day <= daysInMonth; day++) {
             const dayElement = document.createElement('div');
@@ -424,65 +372,6 @@ class EventsCalendar {
         }
     }
 
-    loadSampleEvents() {
-        // Sample events - Replace with Google Calendar API later
-        this.events = [
-            {
-                id: 1,
-                title: 'Sunday Service',
-                description: 'Join us for our weekly Sunday service with worship and preaching from God\'s word.',
-                date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2, 10, 0),
-                duration: 120,
-                location: 'Lugala Chapter',
-                type: 'service',
-                preacher: 'Pastor Anthony Azi'
-            },
-            {
-                id: 2,
-                title: 'Bible Study',
-                description: 'Mid-week Bible study focusing on the Book of Romans. All are welcome.',
-                date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 4, 18, 0),
-                duration: 90,
-                location: 'Lugala Chapter',
-                type: 'study',
-                preacher: 'Pastor Susan Azi'
-            },
-            {
-                id: 3,
-                title: 'Prayer Meeting',
-                description: 'Corporate prayer meeting for the needs of the church and community.',
-                date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 7, 17, 0),
-                duration: 60,
-                location: 'Lugala Chapter',
-                type: 'prayer',
-                preacher: 'Brother Benedict'
-            },
-            {
-                id: 4,
-                title: 'Holiness Conference',
-                description: 'Annual holiness conference with special guest speakers and revival meetings.',
-                date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 14, 9, 0),
-                duration: 480,
-                location: 'Main Auditorium',
-                type: 'conference',
-                preacher: 'Pastor Paul Rika'
-            },
-            {
-                id: 5,
-                title: 'Youth Fellowship',
-                description: 'Special gathering for young people with worship, teaching, and fellowship.',
-                date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 16, 15, 0),
-                duration: 120,
-                location: 'Youth Hall',
-                type: 'fellowship',
-                preacher: 'Sister Grace'
-            }
-        ];
-
-        this.renderListView();
-        this.renderUpcomingView();
-    }
-
     getEventsForDate(date) {
         return this.events.filter(event => {
             const eventDate = new Date(event.date);
@@ -494,9 +383,10 @@ class EventsCalendar {
 
     renderListView() {
         const eventsList = document.getElementById('events-list');
+        if (!eventsList) return;
+
         eventsList.innerHTML = '';
 
-        // Sort events by date
         const sortedEvents = [...this.events].sort((a, b) => new Date(a.date) - new Date(b.date));
 
         sortedEvents.forEach(event => {
@@ -517,18 +407,23 @@ class EventsCalendar {
                     </div>
                 </div>
                 <div class="event-list-actions">
-                    <button class="btn btn-primary" onclick="eventsCalendar.showEventDetails(${event.id})">Details</button>
+                    <button class="btn btn-primary">Details</button>
                 </div>
             `;
+            const detailsBtn = eventElement.querySelector('.btn');
+            if (detailsBtn) {
+                detailsBtn.addEventListener('click', () => this.showEventDetails(event));
+            }
             eventsList.appendChild(eventElement);
         });
     }
 
     renderUpcomingView() {
         const upcomingEvents = document.getElementById('upcoming-events');
+        if (!upcomingEvents) return;
+
         upcomingEvents.innerHTML = '';
 
-        // Get next 5 events
         const now = new Date();
         const upcoming = this.events
             .filter(event => new Date(event.date) > now)
@@ -551,20 +446,32 @@ class EventsCalendar {
                     <div><i class="far fa-clock"></i> ${this.formatDuration(event.duration)}</div>
                 </div>
                 <div class="upcoming-event-actions">
-                    <button class="btn btn-primary" onclick="eventsCalendar.showEventDetails(${event.id})">View Details</button>
+                    <button class="btn btn-primary">View Details</button>
                 </div>
             `;
+            const detailsBtn = eventElement.querySelector('.btn');
+            if (detailsBtn) {
+                detailsBtn.addEventListener('click', () => this.showEventDetails(event));
+            }
             upcomingEvents.appendChild(eventElement);
         });
     }
 
-    showEventDetails(eventId) {
-        const event = typeof eventId === 'object' ? eventId : this.events.find(e => e.id === eventId);
-        if (!event) return;
-
+    showEventDetails(event) {
         const modal = document.getElementById('event-modal');
         const modalContent = document.getElementById('modal-content');
+        if (!modal || !modalContent) return;
+
         const eventDate = new Date(event.date);
+
+        let googleCalendarButton = '';
+        if (event.googleEvent && event.htmlLink) {
+            googleCalendarButton = `
+                <button class="btn btn-google">
+                    <i class="fab fa-google"></i> Open in Google Calendar
+                </button>
+            `;
+        }
 
         modalContent.innerHTML = `
             <h3>${event.title}</h3>
@@ -574,25 +481,124 @@ class EventsCalendar {
                 <p><strong>Location:</strong> ${event.location}</p>
                 <p><strong>Speaker:</strong> ${event.preacher}</p>
                 <p><strong>Event Type:</strong> ${this.formatEventType(event.type)}</p>
+                ${event.googleEvent ? '<p><strong>Source:</strong> Google Calendar</p>' : '<p><strong>Source:</strong> Sample Event</p>'}
             </div>
             <div class="event-description">
                 <p>${event.description}</p>
             </div>
             <div class="event-actions">
-                <button class="btn btn-primary" onclick="eventsCalendar.addToCalendar(${event.id})">
-                    <i class="far fa-calendar-plus"></i> Add to Calendar
+                ${googleCalendarButton}
+                <button class="btn btn-primary">
+                    <i class="far fa-calendar-plus"></i> Add to My Calendar
                 </button>
-                <button class="btn btn-secondary" onclick="eventsCalendar.shareEvent(${event.id})">
+                <button class="btn btn-secondary">
                     <i class="fas fa-share"></i> Share Event
                 </button>
             </div>
         `;
 
+        // Add event listeners to modal buttons
+        if (event.googleEvent && event.htmlLink) {
+            const googleBtn = modalContent.querySelector('.btn-google');
+            if (googleBtn) {
+                googleBtn.addEventListener('click', () => this.openGoogleCalendar(event.htmlLink));
+            }
+        }
+
+        const addToCalendarBtn = modalContent.querySelector('.btn-primary');
+        if (addToCalendarBtn) {
+            addToCalendarBtn.addEventListener('click', () => this.addToCalendar(event.id));
+        }
+
+        const shareBtn = modalContent.querySelector('.btn-secondary');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => this.shareEvent(event.id));
+        }
+
         modal.classList.add('active');
     }
 
+    openGoogleCalendar(url) {
+        window.open(url, '_blank');
+    }
+
+    addToCalendar(eventId) {
+        const event = this.events.find(e => e.id === eventId);
+        if (event.googleEvent && event.htmlLink) {
+            window.open(event.htmlLink, '_blank');
+        } else {
+            // For sample events, create a Google Calendar URL
+            const startTime = event.date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/g, '');
+            const endTime = new Date(event.date.getTime() + event.duration * 60000).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/g, '');
+
+            const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+
+            window.open(googleCalendarUrl, '_blank');
+        }
+    }
+
+    shareEvent(eventId) {
+        const event = this.events.find(e => e.id === eventId);
+        if (navigator.share) {
+            navigator.share({
+                title: event.title,
+                text: event.description,
+                url: window.location.href
+            });
+        } else {
+            navigator.clipboard.writeText(`${event.title} - ${window.location.href}`);
+            alert('Event link copied to clipboard!');
+        }
+    }
+
+    openGoogleCalendarSubscription() {
+        const googleUrl = `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(this.calendarId)}`;
+        window.open(googleUrl, '_blank');
+    }
+
+    downloadICal() {
+        // Simple iCal file creation
+        let icalContent = [
+            'BEGIN:VCALENDAR',
+            'VERSION:2.0',
+            'PRODID:-//HOREMOW Church//EN'
+        ];
+
+        this.events.forEach(event => {
+            const start = this.formatDateForICal(event.date);
+            const end = this.formatDateForICal(new Date(event.date.getTime() + event.duration * 60000));
+
+            icalContent.push(
+                'BEGIN:VEVENT',
+                `DTSTART:${start}`,
+                `DTEND:${end}`,
+                `SUMMARY:${event.title}`,
+                `DESCRIPTION:${event.description}`,
+                `LOCATION:${event.location}`,
+                'END:VEVENT'
+            );
+        });
+
+        icalContent.push('END:VCALENDAR');
+
+        const blob = new Blob([icalContent.join('\n')], { type: 'text/calendar' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'horemow-events.ics';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    formatDateForICal(date) {
+        return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/g, '');
+    }
+
     closeModal() {
-        document.getElementById('event-modal').classList.remove('active');
+        const modal = document.getElementById('event-modal');
+        if (modal) {
+            modal.classList.remove('active');
+        }
     }
 
     formatTime(date) {
@@ -620,433 +626,320 @@ class EventsCalendar {
         return types[type] || type;
     }
 
-    addToCalendar(eventId) {
-        const event = this.events.find(e => e.id === eventId);
-        // In real implementation, this would create .ics file or Google Calendar link
-        alert(`Adding "${event.title}" to your calendar...`);
+    updateConnectionStatus(connected, message) {
+        const statusElement = document.getElementById('connection-status');
+        if (!statusElement) return;
+
+        const indicator = statusElement.querySelector('.status-indicator');
+        if (indicator) {
+            if (connected) {
+                statusElement.className = 'connection-status connected';
+                indicator.innerHTML = '<i class="fas fa-wifi"></i> Connected';
+            } else {
+                statusElement.className = 'connection-status error';
+                indicator.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Disconnected';
+            }
+        }
+
+        // Update status details
+        const eventsLoaded = document.getElementById('events-loaded');
+        if (eventsLoaded) {
+            eventsLoaded.textContent = `• ${this.events.length} events loaded`;
+        }
     }
 
-    shareEvent(eventId) {
-        const event = this.events.find(e => e.id === eventId);
-        if (navigator.share) {
-            navigator.share({
-                title: event.title,
-                text: event.description,
-                url: window.location.href
-            });
-        } else {
-            // Fallback: copy to clipboard
-            navigator.clipboard.writeText(`${event.title} - ${window.location.href}`);
-            alert('Event link copied to clipboard!');
+    updateEventsCount() {
+        const countElement = document.getElementById('events-count');
+        if (countElement) {
+            countElement.textContent = `${this.events.length} events`;
+        }
+    }
+
+    showLoading(show) {
+        const statusElement = document.getElementById('connection-status');
+        if (statusElement && show) {
+            const indicator = statusElement.querySelector('.status-indicator');
+            if (indicator) {
+                indicator.innerHTML = '<i class="fas fa-sync fa-spin"></i> Loading...';
+            }
+        }
+    }
+
+    refreshCalendar() {
+        this.loadGoogleCalendarEvents();
+    }
+
+    updateLastSync() {
+        const lastSync = document.getElementById('last-sync');
+        if (lastSync) {
+            lastSync.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
         }
     }
 }
 
-// Initialize the calendar when DOM is loaded
-let eventsCalendar;
-
+// ========== MAIN DOM CONTENT LOADED ==========
 document.addEventListener('DOMContentLoaded', function () {
-    eventsCalendar = new EventsCalendar();
+    console.log('HOREMOW Website - Initializing...');
 
-    // Update last sync time
+    // Initialize Events Calendar (ONLY ONCE)
+    window.eventsCalendar = new EventsCalendar();
+
+    // Update last sync time every minute
     setInterval(() => {
-        const lastSync = document.getElementById('last-sync');
-        lastSync.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
-    }, 60000); // Update every minute
+        if (window.eventsCalendar) {
+            window.eventsCalendar.updateLastSync();
+        }
+    }, 60000);
+
+    // Mobile Navigation Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navList = document.querySelector('.nav-list');
+
+    if (hamburger && navList) {
+        hamburger.addEventListener('click', function () {
+            this.classList.toggle('active');
+            navList.classList.toggle('active');
+        });
+    }
+
+    // Close mobile menu when clicking on a link
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            if (hamburger) hamburger.classList.remove('active');
+            if (navList) navList.classList.remove('active');
+            navLinks.forEach(item => item.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Accordion functionality for beliefs section
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        if (header) {
+            header.addEventListener('click', function () {
+                accordionItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                item.classList.toggle('active');
+            });
+        }
+    });
+
+    // Form submission
+    const contactForm = document.getElementById('messageForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const header = document.querySelector('.header');
+                const headerHeight = header ? header.offsetHeight : 0;
+                const targetPosition = targetElement.offsetTop - headerHeight;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (header) {
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.backgroundColor = 'var(--white)';
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        }
+    });
+
+    // Set active nav link based on scroll position
+    function setActiveNavLink() {
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        let currentSection = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const header = document.querySelector('.header');
+            const headerHeight = header ? header.offsetHeight : 0;
+
+            if (window.scrollY >= (sectionTop - headerHeight - 50)) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', setActiveNavLink);
+
+    // Animation on scroll
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.aim-card, .pastor-card, .sermon-card, .book-card');
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            if (elementTop < window.innerHeight - 150) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    }
+
+    // Set initial state for animated elements
+    document.querySelectorAll('.aim-card, .pastor-card, .sermon-card, .book-card').forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    });
+
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll();
+
+    // Initialize other managers
+    if (typeof ChaptersManager !== 'undefined') {
+        new ChaptersManager();
+    }
+    if (typeof ContactManager !== 'undefined') {
+        new ContactManager();
+    }
 });
 
+// ========== OTHER FUNCTIONALITY ==========
 
+// Sermons Filtering and Search Functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const sermonCards = document.querySelectorAll('.sermon-card');
+    const searchInput = document.getElementById('sermonSearch');
+    const loadMoreBtn = document.getElementById('loadMoreSermons');
 
+    if (filterBtns.length > 0 && sermonCards.length > 0) {
+        let visibleSermons = 4;
 
-// Enhanced homepage interaction Hero section
-// Homepage Enhancements JavaScript
-class HomepageEnhancements {
-    constructor() {
-        this.currentTestimonial = 0;
-        this.init();
-    }
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const filter = this.getAttribute('data-filter');
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
 
-    init() {
-        this.setupTestimonialCarousel();
-        this.setupLiveStream();
-        this.setupSmoothScrolling();
-    }
+                sermonCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-preacher') === filter) {
+                        card.style.display = 'block';
+                        setTimeout(() => card.classList.remove('hidden'), 10);
+                    } else {
+                        card.classList.add('hidden');
+                        setTimeout(() => card.style.display = 'none', 300);
+                    }
+                });
 
-    setupTestimonialCarousel() {
-        const slides = document.querySelectorAll('.testimonial-slide');
-        const dots = document.querySelectorAll('.dot');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-
-        const showSlide = (index) => {
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-            this.currentTestimonial = index;
-        };
-
-        // Next button
-        nextBtn.addEventListener('click', () => {
-            let nextIndex = this.currentTestimonial + 1;
-            if (nextIndex >= slides.length) nextIndex = 0;
-            showSlide(nextIndex);
+                visibleSermons = 4;
+                updateLoadMoreButton();
+            });
         });
 
-        // Previous button
-        prevBtn.addEventListener('click', () => {
-            let prevIndex = this.currentTestimonial - 1;
-            if (prevIndex < 0) prevIndex = slides.length - 1;
-            showSlide(prevIndex);
-        });
+        if (searchInput) {
+            searchInput.addEventListener('input', function () {
+                const searchTerm = this.value.toLowerCase();
+                sermonCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('.sermon-description').textContent.toLowerCase();
+                    const preacher = card.querySelector('.sermon-preacher').textContent.toLowerCase();
 
-        // Dot clicks
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => showSlide(index));
-        });
+                    if (title.includes(searchTerm) || description.includes(searchTerm) || preacher.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        setTimeout(() => card.classList.remove('hidden'), 10);
+                    } else {
+                        card.classList.add('hidden');
+                        setTimeout(() => card.style.display = 'none', 300);
+                    }
+                });
+            });
+        }
 
-        // Auto-advance
-        setInterval(() => {
-            let nextIndex = this.currentTestimonial + 1;
-            if (nextIndex >= slides.length) nextIndex = 0;
-            showSlide(nextIndex);
-        }, 5000);
-    }
+        function updateLoadMoreButton() {
+            const visibleCards = document.querySelectorAll('.sermon-card:not(.hidden)');
+            if (loadMoreBtn) {
+                if (visibleCards.length <= visibleSermons) {
+                    loadMoreBtn.style.display = 'none';
+                } else {
+                    loadMoreBtn.style.display = 'block';
+                }
 
-    setupLiveStream() {
-        // Simulate live stream stats updates
-        setInterval(() => {
-            const watchingElement = document.querySelector('.stream-stats span:first-child');
-            const currentWatching = Math.floor(Math.random() * 50) + 200;
-            watchingElement.innerHTML = `<i class="fas fa-eye"></i> ${currentWatching} watching now`;
-        }, 10000);
+                visibleCards.forEach((card, index) => {
+                    if (index < visibleSermons) {
+                        card.style.display = 'block';
+                        setTimeout(() => card.classList.remove('hidden'), 10);
+                    } else {
+                        card.classList.add('hidden');
+                        setTimeout(() => card.style.display = 'none', 300);
+                    }
+                });
+            }
+        }
 
-        // Simulate chat messages
-        const chatMessages = [
-            "Praise God for this service!",
-            "Amen to that message!",
-            "Praying for everyone here",
-            "This worship is powerful",
-            "Thank you Pastor for the word"
-        ];
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function () {
+                visibleSermons += 4;
+                updateLoadMoreButton();
+            });
+        }
 
-        setInterval(() => {
-            const chatContainer = document.querySelector('.chat-messages');
-            const users = ['Sarah', 'David', 'Grace', 'Michael', 'Esther', 'Joshua'];
-            const randomUser = users[Math.floor(Math.random() * users.length)];
-            const randomMessage = chatMessages[Math.floor(Math.random() * chatMessages.length)];
-
-            const messageElement = document.createElement('div');
-            messageElement.className = 'message';
-            messageElement.innerHTML = `
-                <span class="user">${randomUser}:</span>
-                <span class="text">${randomMessage}</span>
-            `;
-
-            chatContainer.appendChild(messageElement);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }, 8000);
-    }
-
-    setupSmoothScrolling() {
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerHeight = document.querySelector('.header').offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight;
-
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
+        document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const card = this.closest('.sermon-card');
+                const title = card.querySelector('h3').textContent;
+                if (navigator.share) {
+                    navigator.share({
+                        title: title,
+                        url: window.location.href
                     });
+                } else {
+                    alert(`Share "${title}" with others!`);
                 }
             });
         });
+
+        updateLoadMoreButton();
     }
-}
-
-// Initialize homepage enhancements
-document.addEventListener('DOMContentLoaded', function () {
-    new HomepageEnhancements();
-
-    // Update live indicator with current service
-    function updateLiveService() {
-        const now = new Date();
-        const day = now.getDay();
-        const hours = now.getHours();
-
-        let service = '';
-        if (day === 0) { // Sunday
-            service = 'Sunday Service';
-        } else if (day === 2) { // Tuesday
-            service = 'Bible Study';
-        } else if (day === 4) { // Thursday
-            service = 'Prayer Meeting';
-        } else {
-            service = 'Fellowship';
-        }
-
-        const liveText = document.querySelector('.live-text');
-        if (liveText) {
-            liveText.textContent = `Live Now: ${service}`;
-        }
-    }
-
-    updateLiveService();
-    setInterval(updateLiveService, 60000); // Update every minute
 });
 
-
-// youtube API for sermon videos
-// YouTube API Integration Class
-class YouTubeAPI {
-    constructor() {
-        this.API_KEY = 'YOUR_YOUTUBE_API_KEY'; // You'll get this from Google Cloud Console
-        this.CHANNEL_ID = 'YOUR_YOUTUBE_CHANNEL_ID'; // Your YouTube channel ID
-        this.liveVideoId = null;
-        this.isChecking = false;
-
-        this.init();
-    }
-
-    init() {
-        this.setupEventListeners();
-        this.checkLiveStatus(); // Initial check
-        this.startAutoRefresh();
-        this.loadChannelStats();
-        this.loadRecentVideos();
-    }
-
-    setupEventListeners() {
-        // Manual refresh button
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('[onclick="checkLiveStatus()"]')) {
-                this.checkLiveStatus();
-            }
-        });
-    }
-
-    async checkLiveStatus() {
-        if (this.isChecking) return;
-
-        this.isChecking = true;
-        this.showLoadingState();
-        this.updateLastChecked();
-
-        try {
-            // Check for live broadcasts
-            const liveResponse = await fetch(
-                `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${this.CHANNEL_ID}&eventType=live&type=video&key=${this.API_KEY}`
-            );
-
-            if (!liveResponse.ok) {
-                throw new Error('YouTube API request failed');
-            }
-
-            const liveData = await liveResponse.json();
-
-            if (liveData.items && liveData.items.length > 0) {
-                // Channel is live!
-                this.liveVideoId = liveData.items[0].id.videoId;
-                await this.showLiveStream(this.liveVideoId);
-            } else {
-                // Channel is offline
-                this.showOfflineState();
-            }
-
-        } catch (error) {
-            console.error('Error checking live status:', error);
-            this.showErrorState();
-        } finally {
-            this.isChecking = false;
-        }
-    }
-
-    async showLiveStream(videoId) {
-        try {
-            // Get video details
-            const videoResponse = await fetch(
-                `https://www.googleapis.com/youtube/v3/videos?part=snippet,liveStreamingDetails,statistics&id=${videoId}&key=${this.API_KEY}`
-            );
-
-            const videoData = await videoResponse.json();
-            const video = videoData.items[0];
-
-            // Update UI for live state
-            this.showStatus('live');
-            this.hideAllContainers();
-            document.querySelector('.live-stream-embed').style.display = 'block';
-
-            // Create YouTube embed
-            const embedContainer = document.getElementById('youtube-embed');
-            embedContainer.innerHTML = `
-                <iframe 
-                    width="100%" 
-                    height="400" 
-                    src="https://www.youtube.com/embed/${videoId}?autoplay=1"
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-            `;
-
-            // Update stream info
-            document.getElementById('stream-title').textContent = video.snippet.title;
-            document.getElementById('stream-description').textContent = video.snippet.description;
-
-            // Update viewer count and time
-            if (video.liveStreamingDetails) {
-                this.updateViewerCount(video.statistics.viewCount);
-                this.updateStreamTime(video.liveStreamingDetails.actualStartTime);
-            }
-
-        } catch (error) {
-            console.error('Error loading live stream:', error);
-            this.showErrorState();
-        }
-    }
-
-    showOfflineState() {
-        this.showStatus('offline');
-        this.hideAllContainers();
-        document.querySelector('.offline-state').style.display = 'block';
-    }
-
-    showErrorState() {
-        this.showStatus('error');
-        this.hideAllContainers();
-        document.querySelector('.error-state').style.display = 'block';
-    }
-
-    showLoadingState() {
-        this.showStatus('loading');
-        this.hideAllContainers();
-        document.querySelector('.stream-loading').style.display = 'block';
-    }
-
-    showStatus(status) {
-        // Hide all status indicators
-        const statusIndicators = document.querySelectorAll('.api-status-indicator > div');
-        statusIndicators.forEach(indicator => indicator.style.display = 'none');
-
-        // Show current status
-        document.querySelector(`.status-${status}`).style.display = 'flex';
-    }
-
-    hideAllContainers() {
-        const containers = document.querySelectorAll('.stream-loading, .live-stream-embed, .offline-state, .error-state');
-        containers.forEach(container => container.style.display = 'none');
-    }
-
-    updateViewerCount(viewCount) {
-        const countElement = document.querySelector('.count');
-        if (viewCount) {
-            countElement.textContent = this.formatNumber(viewCount);
-        }
-    }
-
-    updateStreamTime(startTime) {
-        const timeElement = document.querySelector('.time');
-        if (startTime) {
-            const start = new Date(startTime);
-            const now = new Date();
-            const diffMs = now - start;
-            const diffMins = Math.floor(diffMs / 60000);
-
-            if (diffMins < 60) {
-                timeElement.textContent = `${diffMins} minutes`;
-            } else {
-                const diffHours = Math.floor(diffMins / 60);
-                timeElement.textContent = `${diffHours} hours`;
-            }
-        }
-    }
-
-    updateLastChecked() {
-        const lastChecked = document.getElementById('last-checked');
-        lastChecked.textContent = `Last checked: ${new Date().toLocaleTimeString()}`;
-    }
-
-    async loadChannelStats() {
-        try {
-            const response = await fetch(
-                `https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=${this.CHANNEL_ID}&key=${this.API_KEY}`
-            );
-
-            const data = await response.json();
-            const channel = data.items[0];
-
-            // Update channel stats
-            document.getElementById('sub-count').textContent = this.formatNumber(channel.statistics.subscriberCount);
-            document.getElementById('video-count').textContent = this.formatNumber(channel.statistics.videoCount);
-            document.getElementById('view-count').textContent = this.formatNumber(channel.statistics.viewCount);
-
-        } catch (error) {
-            console.error('Error loading channel stats:', error);
-        }
-    }
-
-    async loadRecentVideos() {
-        try {
-            const response = await fetch(
-                `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${this.CHANNEL_ID}&maxResults=3&order=date&type=video&key=${this.API_KEY}`
-            );
-
-            const data = await response.json();
-            const videosContainer = document.getElementById('recent-videos-list');
-
-            videosContainer.innerHTML = data.items.map(video => `
-                <div class="video-item">
-                    <img src="${video.snippet.thumbnails.medium.url}" alt="${video.snippet.title}">
-                    <div class="video-info">
-                        <h5>${video.snippet.title}</h5>
-                        <p>${new Date(video.snippet.publishedAt).toLocaleDateString()}</p>
-                    </div>
-                </div>
-            `).join('');
-
-        } catch (error) {
-            console.error('Error loading recent videos:', error);
-        }
-    }
-
-    formatNumber(num) {
-        if (num >= 1000000) {
-            return (num / 1000000).toFixed(1) + 'M';
-        } else if (num >= 1000) {
-            return (num / 1000).toFixed(1) + 'K';
-        }
-        return num;
-    }
-
-    startAutoRefresh() {
-        // Check every 30 seconds
-        setInterval(() => {
-            if (!this.isChecking) {
-                this.checkLiveStatus();
-            }
-        }, 30000);
-    }
-}
-
-// Global function for manual refresh
-function checkLiveStatus() {
-    if (window.youtubeAPI) {
-        window.youtubeAPI.checkLiveStatus();
-    }
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function () {
-    window.youtubeAPI = new YouTubeAPI();
-});
-
-
-// chapter section interactivity js
 // Chapters Section Interactivity
 class ChaptersManager {
     constructor() {
@@ -1061,10 +954,12 @@ class ChaptersManager {
 
     setupSearch() {
         const searchInput = document.getElementById('chapterSearch');
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            this.filterChapters(searchTerm);
-        });
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                this.filterChapters(searchTerm);
+            });
+        }
     }
 
     setupFilters() {
@@ -1078,7 +973,6 @@ class ChaptersManager {
     }
 
     setupContactButtons() {
-        // Phone call buttons
         document.querySelectorAll('.contact-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const phone = e.target.getAttribute('data-phone');
@@ -1086,7 +980,6 @@ class ChaptersManager {
             });
         });
 
-        // WhatsApp buttons
         document.querySelectorAll('.whatsapp-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const phone = e.target.getAttribute('data-phone');
@@ -1095,10 +988,8 @@ class ChaptersManager {
             });
         });
 
-        // Directions buttons
         document.querySelectorAll('.directions-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                // For Lugala headquarters
                 const address = "Lugala, Kampala, Uganda";
                 window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, '_blank');
             });
@@ -1107,42 +998,49 @@ class ChaptersManager {
 
     filterChapters(searchTerm) {
         const activeGrid = document.querySelector('.chapters-grid.active');
-        const chapters = activeGrid.querySelectorAll('.chapter-card');
-        let visibleCount = 0;
+        if (activeGrid) {
+            const chapters = activeGrid.querySelectorAll('.chapter-card');
+            let visibleCount = 0;
 
-        chapters.forEach(chapter => {
-            const text = chapter.textContent.toLowerCase();
-            if (text.includes(searchTerm)) {
-                chapter.style.display = 'block';
-                visibleCount++;
-            } else {
-                chapter.style.display = 'none';
-            }
-        });
+            chapters.forEach(chapter => {
+                const text = chapter.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    chapter.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    chapter.style.display = 'none';
+                }
+            });
 
-        this.toggleNoResults(visibleCount === 0);
+            this.toggleNoResults(visibleCount === 0);
+        }
     }
 
     applyFilter(filter) {
-        // Update active filter button
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
+        const activeBtn = document.querySelector(`[data-filter="${filter}"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+        }
 
-        // Show appropriate grid
         document.querySelectorAll('.chapters-grid').forEach(grid => {
             grid.classList.remove('active');
         });
 
         if (filter === 'all') {
-            document.querySelector('[data-region="uganda"]').classList.add('active');
+            const ugandaGrid = document.querySelector('[data-region="uganda"]');
+            if (ugandaGrid) ugandaGrid.classList.add('active');
         } else {
-            document.querySelector(`[data-region="${filter}"]`).classList.add('active');
+            const regionGrid = document.querySelector(`[data-region="${filter}"]`);
+            if (regionGrid) regionGrid.classList.add('active');
         }
 
-        // Clear search
-        document.getElementById('chapterSearch').value = '';
+        const searchInput = document.getElementById('chapterSearch');
+        if (searchInput) {
+            searchInput.value = '';
+        }
         this.filterChapters('');
     }
 
@@ -1151,24 +1049,15 @@ class ChaptersManager {
         const activeGrid = document.querySelector('.chapters-grid.active');
 
         if (show) {
-            noResults.style.display = 'block';
-            activeGrid.style.display = 'none';
+            if (noResults) noResults.style.display = 'block';
+            if (activeGrid) activeGrid.style.display = 'none';
         } else {
-            noResults.style.display = 'none';
-            activeGrid.style.display = 'grid';
+            if (noResults) noResults.style.display = 'none';
+            if (activeGrid) activeGrid.style.display = 'grid';
         }
     }
 }
 
-// Initialize chapters manager
-document.addEventListener('DOMContentLoaded', function () {
-    new ChaptersManager();
-});
-
-
-
-
-// contact interactivity
 // Contact Section Interactivity
 class ContactManager {
     constructor() {
@@ -1182,18 +1071,21 @@ class ContactManager {
 
     setupForm() {
         const form = document.getElementById('messageForm');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleFormSubmit(form);
-        });
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleFormSubmit(form);
+            });
+        }
     }
 
     setupMapInteractions() {
-        // Add click handler for map pin
         const mapPin = document.querySelector('.map-pin');
-        mapPin.addEventListener('click', () => {
-            window.open('https://maps.app.goo.gl/HkKAkGMo2Xk9Mzxi9', '_blank');
-        });
+        if (mapPin) {
+            mapPin.addEventListener('click', () => {
+                window.open('https://maps.app.goo.gl/HkKAkGMo2Xk9Mzxi9', '_blank');
+            });
+        }
     }
 
     handleFormSubmit(form) {
@@ -1205,13 +1097,11 @@ class ContactManager {
             message: formData.get('message')
         };
 
-        // Show loading state
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         submitBtn.disabled = true;
 
-        // Simulate form submission (replace with actual form handling)
         setTimeout(() => {
             this.showSuccessMessage();
             form.reset();
@@ -1221,7 +1111,6 @@ class ContactManager {
     }
 
     showSuccessMessage() {
-        // Create success notification
         const notification = document.createElement('div');
         notification.className = 'form-success';
         notification.innerHTML = `
@@ -1235,8 +1124,6 @@ class ContactManager {
         `;
 
         document.body.appendChild(notification);
-
-        // Add styles for notification
         notification.style.cssText = `
             position: fixed;
             top: 20px;
@@ -1251,7 +1138,6 @@ class ContactManager {
             animation: slideIn 0.3s ease;
         `;
 
-        // Remove notification after 5 seconds
         setTimeout(() => {
             notification.remove();
         }, 5000);
@@ -1262,7 +1148,6 @@ class ContactManager {
 function copyAddress() {
     const address = "HOREMOW Uganda, Lugala, Kampala, Uganda";
     navigator.clipboard.writeText(address).then(() => {
-        // Show copy confirmation
         const btn = event.target.closest('button');
         const originalText = btn.innerHTML;
         btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
@@ -1271,11 +1156,6 @@ function copyAddress() {
         }, 2000);
     });
 }
-
-// Initialize contact manager
-document.addEventListener('DOMContentLoaded', function () {
-    new ContactManager();
-});
 
 // Add CSS animation for notification
 const style = document.createElement('style');
@@ -1314,3 +1194,191 @@ style.textContent = `
         font-size: 0.9rem;
     }
 `;
+document.head.appendChild(style);
+
+
+
+// chartbot javascript
+
+// DOM Elements
+const chatbotIcon = document.getElementById('chatbotIcon');
+const chatbotContainer = document.getElementById('chatbotContainer');
+const closeChat = document.getElementById('closeChat');
+const chatMessages = document.getElementById('chatMessages');
+const userInput = document.getElementById('userInput');
+const quickReplies = document.getElementById('quickReplies');
+const popupNotification = document.getElementById('popupNotification');
+const closePopup = document.getElementById('closePopup');
+const startChat = document.getElementById('startChat');
+const notificationBadge = document.getElementById('notificationBadge');
+
+// Bot responses database
+const botResponses = {
+    'greeting': 'Hello! Welcome to our church. How can I help you today?',
+    'service times': 'We have services on Sundays at 9:00 AM and 11:00 AM. Sunday School is at 10:00 AM. We also have Wednesday Bible Study at 7:00 PM.',
+    'location': 'We are located at 123 Faith Avenue, Kampala, Uganda. Plenty of parking is available at the rear of the building.',
+    'events': 'This week we have: Men\'s Prayer Breakfast (Saturday, 8:00 AM), Women\'s Fellowship (Saturday, 2:00 PM), and Children\'s Ministry Training (Sunday, 12:30 PM).',
+    'prayer': 'We believe in the power of prayer. Our prayer team is ready to intercede for you. For personal prayer requests, please contact us directly on WhatsApp.',
+    'beliefs': 'We believe in the core truths of Christianity: the authority of the Bible, the Trinity, salvation by grace through faith, and the mission of the church.',
+    'pastor': 'For matters requiring pastoral care, our team would be happy to assist you directly. Please contact us on WhatsApp to schedule a conversation.',
+    'default': 'I\'m sorry, I didn\'t understand that. Could you please rephrase? For more specific assistance, you can contact us directly on WhatsApp.'
+};
+
+// Keywords mapping to responses
+const keywordMap = {
+    'hello': 'greeting',
+    'hi': 'greeting',
+    'service': 'service times',
+    'time': 'service times',
+    'sunday': 'service times',
+    'when': 'service times',
+    'where': 'location',
+    'address': 'location',
+    'map': 'location',
+    'event': 'events',
+    'activity': 'events',
+    'pray': 'prayer',
+    'prayer': 'prayer',
+    'believe': 'beliefs',
+    'faith': 'beliefs',
+    'doctrine': 'beliefs',
+    'pastor': 'pastor',
+    'counsel': 'pastor',
+    'help': 'pastor'
+};
+
+// Auto-popup functionality
+let popupShown = false;
+let popupTimer;
+
+function showPopup() {
+    if (!popupShown) {
+        popupTimer = setTimeout(() => {
+            popupNotification.classList.add('active');
+            notificationBadge.style.display = 'flex';
+            popupShown = true;
+        }, 3000); // Show popup after 3 seconds
+    }
+}
+
+function hidePopup() {
+    popupNotification.classList.remove('active');
+    notificationBadge.style.display = 'none';
+}
+
+// Event Listeners
+chatbotIcon.addEventListener('click', () => {
+    chatbotContainer.classList.toggle('active');
+    hidePopup();
+    notificationBadge.style.display = 'none';
+});
+
+closeChat.addEventListener('click', () => {
+    chatbotContainer.classList.remove('active');
+});
+
+closePopup.addEventListener('click', () => {
+    hidePopup();
+});
+
+startChat.addEventListener('click', () => {
+    chatbotContainer.classList.add('active');
+    hidePopup();
+    notificationBadge.style.display = 'none';
+});
+
+// Chat functionality
+function sendMessage() {
+    const message = userInput.value.trim();
+    if (message === '') return;
+
+    // Add user message to chat
+    addMessage(message, 'user');
+    userInput.value = '';
+
+    // Process and respond
+    setTimeout(() => {
+        processUserMessage(message);
+    }, 1000);
+}
+
+function sendQuickReply(reply) {
+    addMessage(reply, 'user');
+
+    setTimeout(() => {
+        processUserMessage(reply);
+    }, 1000);
+}
+
+function processUserMessage(message) {
+    const lowerMessage = message.toLowerCase();
+    let responseKey = 'default';
+
+    // Check for keywords
+    for (const [keyword, key] of Object.entries(keywordMap)) {
+        if (lowerMessage.includes(keyword)) {
+            responseKey = key;
+            break;
+        }
+    }
+
+    // Special case for complex queries
+    if (message.length > 30 ||
+        lowerMessage.includes('problem') ||
+        lowerMessage.includes('issue') ||
+        lowerMessage.includes('crisis') ||
+        lowerMessage.includes('marriage') ||
+        lowerMessage.includes('family')) {
+        responseKey = 'pastor';
+    }
+
+    const response = botResponses[responseKey];
+    addMessage(response, 'bot');
+
+    // Show WhatsApp prompt for certain responses
+    if (responseKey === 'pastor' || responseKey === 'prayer') {
+        setTimeout(() => {
+            addMessage("For more personalized assistance, feel free to contact our team directly on WhatsApp. We're here to help!", 'bot');
+        }, 1500);
+    }
+
+    // Scroll to bottom of chat
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function addMessage(text, sender) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message');
+    messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+    messageDiv.textContent = text;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+// Initialize chatbot
+function initChatbot() {
+    // Show auto-popup after delay
+    showPopup();
+
+    // Add welcome message after a short delay
+    setTimeout(() => {
+        addMessage("You can ask me about service times, location, events, or how to get connected with our church community.", 'bot');
+    }, 2000);
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', initChatbot);
+
+// Close popup if user clicks outside
+document.addEventListener('click', (event) => {
+    if (!event.target.closest('.chatbot-widget') &&
+        !event.target.closest('.popup-notification')) {
+        hidePopup();
+    }
+});
