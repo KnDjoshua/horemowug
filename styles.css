@@ -1,5 +1,123 @@
 /* styles.css */
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* Fix mobile responsiveness - Prevent horizontal shaking */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Ensure all containers don't exceed viewport */
+.container {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Fix iframe responsiveness */
+iframe {
+    max-width: 100%;
+}
+
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 768px) {
+    * {
+        max-width: 100vw;
+    }
+
+    body {
+        width: 100vw;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 100%;
+    }
+
+    /* Fix for elements that might cause overflow */
+    img,
+    video,
+    iframe {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Specifically target problem areas */
+    .calendar-responsive-iframe iframe,
+    .embed-container iframe,
+    .map-background iframe {
+        width: 100% !important;
+        max-width: 100vw !important;
+        height: auto !important;
+        min-height: 300px;
+    }
+
+    /* Fix tables and wide content */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Extra strict mobile fix */
+@media (max-width: 480px) {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Force all containers to stay within viewport */
+    div,
+    section,
+    article,
+    header,
+    footer,
+    nav,
+    main {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    /* Fix specific problem elements */
+    .hero-buttons,
+    .cta-buttons,
+    .subscribe-buttons,
+    .calendar-access-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn {
+        min-width: 0;
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+
+
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -6011,54 +6129,3 @@ img {
         justify-content: center;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
