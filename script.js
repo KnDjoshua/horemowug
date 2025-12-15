@@ -4,61 +4,7 @@
 console.log('HOREMOW Website - Developed by KnDjoshua');
 
 // Events Calendar Class with Public Google Calendar Integration
-// Simple JavaScript for view toggle
-document.addEventListener('DOMContentLoaded', function () {
-    // View toggle functionality
-    const viewButtons = document.querySelectorAll('.view-btn');
-    const monthView = document.querySelector('.calendar-main-view');
-    const agendaView = document.querySelector('.calendar-agenda-view');
 
-    viewButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            // Update active button
-            viewButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-
-            // Show selected view
-            const view = this.dataset.view;
-
-            if (view === 'month') {
-                monthView.classList.add('active');
-                agendaView.classList.remove('active');
-            } else if (view === 'agenda') {
-                monthView.classList.remove('active');
-                agendaView.classList.add('active');
-            }
-        });
-    });
-
-    // Copy iCal link function
-    window.copyICalLink = function () {
-        const iCalLink = 'https://calendar.google.com/calendar/ical/77940f42673f9134628af5f256590bfe055a00c748aed8ee9596ec537a3f8f6f%40group.calendar.google.com/public/basic.ics';
-
-        navigator.clipboard.writeText(iCalLink).then(function () {
-            const btn = document.querySelector('.btn-copy-link');
-            const originalHTML = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Link Copied!';
-            btn.style.background = '#28a745';
-
-            setTimeout(function () {
-                btn.innerHTML = originalHTML;
-                btn.style.background = '';
-            }, 2000);
-        }).catch(function (err) {
-            alert('Could not copy link. Please copy it manually: ' + iCalLink);
-        });
-    };
-
-    // Refresh iframe on window focus (to get latest events)
-    window.addEventListener('focus', function () {
-        const iframes = document.querySelectorAll('iframe');
-        iframes.forEach(iframe => {
-            const src = iframe.src;
-            iframe.src = '';
-            iframe.src = src;
-        });
-    });
-});
 
 // ========== MAIN DOM CONTENT LOADED ==========
 document.addEventListener('DOMContentLoaded', function () {
@@ -75,15 +21,148 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 60000);
 
     // Mobile Navigation Toggle
+
+// Fix Hamburger Menu
+document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navList = document.querySelector('.nav-list');
-
-    if (hamburger && navList) {
-        hamburger.addEventListener('click', function () {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const body = document.body;
+    
+    // Debug: Check if elements exist
+    console.log('Hamburger found:', hamburger);
+    console.log('Nav list found:', navList);
+    console.log('Nav links found:', navLinks.length);
+    
+    // Toggle mobile menu
+    if (hamburger) {
+        hamburger.addEventListener('click', function(e) {
+            console.log('Hamburger clicked');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Toggle classes
             this.classList.toggle('active');
             navList.classList.toggle('active');
+            body.classList.toggle('menu-open');
+            
+            // Toggle aria-expanded for accessibility
+            const isExpanded = this.classList.contains('active');
+            this.setAttribute('aria-expanded', isExpanded);
+            
+            // Prevent scrolling when menu is open
+            if (navList.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+                body.style.position = 'fixed';
+                body.style.width = '100%';
+                body.style.height = '100%';
+            } else {
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
+                body.style.height = '';
+            }
         });
     }
+    
+    // Close menu when clicking on a link
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            console.log('Nav link clicked:', this.textContent);
+            
+            // Close mobile menu
+            if (hamburger.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navList.classList.remove('active');
+                body.classList.remove('menu-open');
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
+                body.style.height = '';
+                
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+            
+            // Update active class for all links
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!navList.contains(e.target) && !hamburger.contains(e.target)) {
+            if (navList.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navList.classList.remove('active');
+                body.classList.remove('menu-open');
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
+                body.style.height = '';
+                
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        }
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            if (navList.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navList.classList.remove('active');
+                body.classList.remove('menu-open');
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
+                body.style.height = '';
+                
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        }
+    });
+    
+    // Handle window resize - close menu if resized to desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            if (navList.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navList.classList.remove('active');
+                body.classList.remove('menu-open');
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
+                body.style.height = '';
+                
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        }
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Close mobile menu when clicking on a link
     const navLinks = document.querySelectorAll('.nav-link');
