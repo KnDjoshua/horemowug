@@ -3057,61 +3057,263 @@ img {
 
 
 /* Events Section Styles */
-.api-config {
-    background: #f8f9fa;
-    padding: 20px;
+
+/* Add these styles to your existing CSS file */
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--border-color, #e0e0e0);
     border-radius: 8px;
-    margin-bottom: 20px;
-    border-left: 4px solid #007bff;
+    overflow: hidden;
 }
 
-.form-group {
+.calendar-day-header {
+    background: var(--secondary-color, #2c3e50);
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    color: white;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.calendar-day {
+    background: white;
+    min-height: 100px;
+    padding: 10px;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+.calendar-day:hover {
+    background: #f8f9fa;
+}
+
+.calendar-day.other-month {
+    background: #f8f9fa;
+    color: #adb5bd;
+}
+
+.calendar-day.today {
+    background: rgba(var(--primary-rgb, 52, 152, 219), 0.1);
+    border: 2px solid var(--primary-color, #3498db);
+}
+
+.day-number {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-color, #333);
+    font-size: 1.1rem;
+}
+
+.day-events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.event-badge {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.event-badge:hover {
+    transform: scale(1.1);
+}
+
+.event-badge.category-service { background: #2ecc71; }
+.event-badge.category-meeting { background: #3498db; }
+.event-badge.category-prayer { background: #9b59b6; }
+.event-badge.category-outreach { background: #e74c3c; }
+.event-badge.category-general { background: #f39c12; }
+
+.event-more {
+    background: #95a5a6;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 2px;
+}
+
+.event-more:hover {
+    background: #7f8c8d;
+}
+
+/* Event Items */
+.event-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-left: 4px solid var(--primary-color, #3498db);
+}
+
+.event-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 70px;
+    text-align: center;
+}
+
+.event-month {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.event-day {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color, #3498db);
+    line-height: 1;
+    margin: 5px 0;
+}
+
+.event-weekday {
+    font-size: 0.8rem;
+    color: #95a5a6;
+    text-transform: uppercase;
+}
+
+.event-details {
+    flex: 1;
+}
+
+.event-title {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.event-time-location {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.event-time-location i {
+    margin-right: 5px;
+    width: 16px;
+    text-align: center;
+}
+
+.event-description {
+    color: #5d6d7e;
+    font-size: 0.95rem;
+    line-height: 1.5;
     margin-bottom: 15px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
+.btn-event-details {
+    background: transparent;
+    border: 1px solid var(--primary-color, #3498db);
+    color: var(--primary-color, #3498db);
+    padding: 6px 15px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-.form-group small {
-    color: #6c757d;
-    font-size: 12px;
-}
-
-.loading {
-    text-align: center;
-    padding: 20px;
-    background: #e9ecef;
-    border-radius: 4px;
-    margin-bottom: 20px;
-}
-
-.btn-google {
-    background: #db4437;
+.btn-event-details:hover {
+    background: var(--primary-color, #3498db);
     color: white;
 }
 
-.btn-google:hover {
-    background: #c23321;
-    color: white;
-}
-
-.event-actions {
+/* Upcoming Events */
+.upcoming-event {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 20px;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
 }
+
+.upcoming-event:hover {
+    transform: translateX(5px);
+}
+
+.upcoming-event-date {
+    min-width: 60px;
+    text-align: center;
+    background: var(--primary-color, #3498db);
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.upcoming-event-day {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.upcoming-event-month {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+}
+
+.upcoming-event-details {
+    flex: 1;
+}
+
+.upcoming-event-details h5 {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+.upcoming-event-time {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.upcoming
+
+
+
+
+
+
+
+
+
+
 
 /* API Configuration Panel */
 .api-config-panel {
