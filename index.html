@@ -559,110 +559,117 @@
             <h2 class="section-title">Events & Services</h2>
             <p class="section-subtitle">Stay connected with our ministry activities</p>
 
-            <!-- Calendar Controls -->
-            <div class="calendar-controls">
-                <!-- View Toggle -->
-                <div class="calendar-view-toggle">
-                    <button class="view-btn active" data-view="month">
-                        <i class="fas fa-calendar-alt"></i> Month View
-                    </button>
-                    <button class="view-btn" data-view="list">
-                        <i class="fas fa-list"></i> List View
-                    </button>
-                    <button class="view-btn" data-view="upcoming">
-                        <i class="fas fa-clock"></i> Upcoming
-                    </button>
-                </div>
-
-                <!-- Sync Controls -->
-                <div class="sync-controls">
-                    <button id="refresh-events" class="btn btn-sm btn-outline">
-                        <i class="fas fa-sync"></i> Refresh
-                    </button>
-                </div>
+            <!-- Direct Calendar Access -->
+            <div class="calendar-access-buttons">
+                <a href="https://calendar.google.com/calendar/u/0?cid=Nzc5NDBmNDI2NzNmOTEzNDYyOGFmNWYyNTY1OTBiZmUwNTVhMDBjNzQ4YWVkOGVlOTU5NmVjNTM3YTNmOGY2ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+                    class="btn btn-primary" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Open Full Calendar View
+                </a>
+                <a href="https://calendar.google.com/calendar/render?cid=77940f42673f9134628af5f256590bfe055a00c748aed8ee9596ec537a3f8f6f@group.calendar.google.com"
+                    class="btn btn-outline" target="_blank">
+                    <i class="fab fa-google"></i> Add to Your Google Calendar
+                </a>
             </div>
 
-            <!-- Calendar Container -->
-            <div class="calendar-container">
-                <!-- Month View -->
-                <div class="month-view active">
-                    <div class="calendar-header">
-                        <button class="nav-btn prev-month">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <h3 id="current-month">July 2024</h3>
-                        <button class="nav-btn next-month">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    <div class="calendar-grid" id="calendar-grid">
-                        <!-- Days will be populated by JavaScript -->
-                    </div>
-                </div>
 
-                <!-- List View -->
-                <div class="list-view">
-                    <div class="events-list-header">
-                        <h4>All Events</h4>
-                        <span class="events-count" id="events-count">0 events</span>
-                    </div>
-                    <div class="events-list" id="events-list">
-                        <!-- Events will be populated by JavaScript -->
-                    </div>
-                </div>
+            <!-- Embedded Calendar -->
+            <div class="calendar-embed-container">
+                <div class="calendar-wrapper">
+                    <!-- Main Calendar View -->
+                    <div class="calendar-main-view active">
+                        <h4><i class="fas fa-calendar-alt"></i> Live Church Calendar</h4>
+                        <p class="calendar-note">Events added to Google Calendar will automatically appear here</p>
 
-                <!-- Upcoming Events -->
-                <div class="upcoming-view">
-                    <div class="upcoming-header">
-                        <h4>Next 5 Events</h4>
+                        <div class="calendar-responsive-iframe">
+                            <iframe
+                                src="https://calendar.google.com/calendar/embed?src=77940f42673f9134628af5f256590bfe055a00c748aed8ee9596ec537a3f8f6f%40group.calendar.google.com&ctz=Africa%2FNairobi&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=0&showTz=0&mode=MONTH"
+                                style="border: 0" width="100%" height="600" frameborder="0" scrolling="no">
+                            </iframe>
+                        </div>
                     </div>
-                    <div class="upcoming-events" id="upcoming-events">
-                        <!-- Next 5 events will be populated by JavaScript -->
+
+                    <!-- Agenda View -->
+                    <div class="calendar-agenda-view">
+                        <h4><i class="fas fa-list"></i> Upcoming Events List</h4>
+                        <div class="agenda-iframe">
+                            <iframe
+                                src="https://calendar.google.com/calendar/embed?src=77940f42673f9134628af5f256590bfe055a00c748aed8ee9596ec537a3f8f6f%40group.calendar.google.com&ctz=Africa%2FNairobi&showTitle=0&showNav=0&showDate=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&mode=AGENDA"
+                                style="border: 0" width="100%" height="400" frameborder="0" scrolling="yes">
+                            </iframe>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Connection Status -->
-            <div class="connection-status" id="connection-status">
-                <div class="status-indicator connected">
-                    <i class="fas fa-wifi"></i>
-                    <span>Connected to Church Calendar</span>
-                </div>
-                <div class="status-details">
-                    <span id="last-sync">Last updated: Just now</span>
-                    <span id="events-loaded">• 0 events loaded</span>
-                </div>
-            </div>
 
-            <!-- Calendar Subscription -->
-            <div class="calendar-subscription">
-                <div class="subscription-header">
-                    <h4><i class="fas fa-calendar-plus"></i> Subscribe to Our Calendar</h4>
-                    <p>Get automatic updates when new events are added</p>
+
+            <!-- Calendar Instructions -->
+            <!-- <div class="calendar-instructions">
+                <div class="instruction-card">
+                    <div class="instruction-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="instruction-content">
+                        <h5>How to Add Events</h5>
+                        <p>Simply add events to your Google Calendar and they will automatically appear here. No coding
+                            required!</p>
+                    </div>
                 </div>
+
+                <div class="instruction-card">
+                    <div class="instruction-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="instruction-content">
+                        <h5>Mobile Friendly</h5>
+                        <p>Use the "Open Full Calendar" button above for best experience on mobile devices.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-card">
+                    <div class="instruction-icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <div class="instruction-content">
+                        <h5>Automatic Updates</h5>
+                        <p>Changes in Google Calendar sync automatically. No need to update the website.</p>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Subscription Options -->
+            <div class="subscription-options">
+                <h4><i class="fas fa-calendar-plus"></i> Subscribe to Our Calendar</h4>
+                <p>Never miss an event - get updates automatically in your calendar app</p>
+
                 <div class="subscribe-buttons">
-                    <a href="#" class="btn btn-google-calendar" target="_blank" id="google-calendar-link">
-                        <i class="fab fa-google"></i>
-                        Add to Google Calendar
+                    <a href="https://calendar.google.com/calendar/render?cid=77940f42673f9134628af5f256590bfe055a00c748aed8ee9596ec537a3f8f6f@group.calendar.google.com"
+                        class="btn btn-google" target="_blank">
+                        <i class="fab fa-google"></i> Add to Google Calendar
                     </a>
-                    <button class="btn btn-outline" id="download-ical">
-                        <i class="fas fa-download"></i>
-                        Download iCal File
+
+                    <a href="https://calendar.google.com/calendar/ical/77940f42673f9134628af5f256590bfe055a00c748aed8ee9596ec537a3f8f6f%40group.calendar.google.com/public/basic.ics"
+                        class="btn btn-outline" download="Church_Calendar.ics">
+                        <i class="fas fa-download"></i> Download iCal File
+                    </a>
+
+                    <button class="btn btn-copy-link" onclick="copyICalLink()">
+                        <i class="fas fa-link"></i> Copy iCal Link
                     </button>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Event Details Modal -->
-    <div class="event-modal" id="event-modal">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close">&times;</button>
-            <div id="modal-content">
-                <!-- Event details will be populated here -->
+                <div class="subscription-steps">
+                    <h5>Quick Setup:</h5>
+                    <ol>
+                        <li><strong>Google Calendar:</strong> Click "Add to Google Calendar" above</li>
+                        <li><strong>iPhone/Mac:</strong> Use this URL in Calendar app:
+                            <code>https://calendar.google.com/calendar/ical/77940f42673f9134628af5f256590bfe055a00c748aed8ee9596ec537a3f8f6f%40group.calendar.google.com/public/basic.ics</code>
+                        </li>
+                        <li><strong>Outlook:</strong> Add calendar → From internet → Paste the iCal URL</li>
+                    </ol>
+                </div>
             </div>
-        </div>
-    </div>
+    </section>
 
 
     <!-- Enhanced Chapters Section -->
@@ -1280,14 +1287,11 @@
                         </div>
                     </div>
                     <div class="youtube-actions">
-                        <a href="[YOUR_YOUTUBE_CHANNEL_LINK]" class="btn btn-youtube" target="_blank">
+                        <a href="https://www.youtube.com/@pastorpaulrika1" class="btn btn-youtube" target="_blank">
                             <i class="fab fa-youtube"></i>
                             Visit Our Channel
                         </a>
-                        <a href="[YOUR_YOUTUBE_SUBSCRIBE_LINK]" class="btn btn-subscribe" target="_blank">
-                            <i class="fas fa-bell"></i>
-                            Subscribe
-                        </a>
+
                     </div>
                 </div>
 
@@ -1338,7 +1342,8 @@
                         <p class="book-description">A powerful guide on the requirements for salvation and escaping
                             eternal damnation.</p>
                         <div class="app-links">
-                            <a href="[YOUR_GOOGLE_PLAY_LINK]" class="app-link play-store" target="_blank">
+                            <a href="https://play.google.com/store/apps/details?id=com.digimaria.hrmwbkslite&hl=en"
+                                class="app-link play-store" target="_blank">
                                 <i class="fab fa-google-play"></i>
                                 <span>Get on Google Play</span>
                             </a>
@@ -1364,11 +1369,13 @@
                         <p class="book-author">By Pastor Anthony Azi</p>
                         <p class="book-description">Practical teachings on living a holy life in today's world.</p>
                         <div class="app-links">
-                            <a href="[YOUR_GOOGLE_PLAY_LINK]" class="app-link play-store" target="_blank">
+                            <a href="https://play.google.com/store/apps/details?id=com.digimaria.hrmwbkslite&hl=en"
+                                class="app-link play-store" target="_blank">
                                 <i class="fab fa-google-play"></i>
                                 <span>Get on Google Play</span>
                             </a>
-                            <a href="[YOUR_APP_STORE_LINK]" class="app-link app-store" target="_blank">
+                            <a href="https://play.google.com/store/apps/details?id=com.digimaria.hrmwbkslite&hl=en"
+                                class="app-link app-store" target="_blank">
                                 <i class="fab fa-apple"></i>
                                 <span>Download on App Store</span>
                             </a>
@@ -1390,11 +1397,13 @@
                         <p class="book-author">By Sister Linda Paul Rika</p>
                         <p class="book-description">A testimony of divine encounter with the realities of eternity.</p>
                         <div class="app-links">
-                            <a href="[YOUR_GOOGLE_PLAY_LINK]" class="app-link play-store" target="_blank">
+                            <a href="https://play.google.com/store/apps/details?id=com.digimaria.hrmwbkslite&hl=en"
+                                class="app-link play-store" target="_blank">
                                 <i class="fab fa-google-play"></i>
                                 <span>Get on Google Play</span>
                             </a>
-                            <a href="[YOUR_APP_STORE_LINK]" class="app-link app-store" target="_blank">
+                            <a href="https://play.google.com/store/apps/details?id=com.digimaria.hrmwbkslite&hl=en"
+                                class="app-link app-store" target="_blank">
                                 <i class="fab fa-apple"></i>
                                 <span>Download on App Store</span>
                             </a>
@@ -1435,7 +1444,7 @@
                     <h4>Get the HOREMOW App Today!</h4>
                     <p>Access all our books, sermons, and resources in one place</p>
                     <div class="app-cta-buttons">
-                        <a href="[YOUR_GOOGLE_PLAY_LINK]" class="btn btn-play-store" target="_blank">
+                        <a href="https://play.google.com/store/apps/details?id=com.digimaria.hrmwbkslite&hl=en" class="btn btn-play-store" target="_blank">
                             <i class="fab fa-google-play"></i>
                             <div>
                                 <span>GET IT ON</span>
@@ -1538,9 +1547,9 @@
                                 </div>
                                 <div class="contact-details">
                                     <h4>Email Us</h4>
-                                    <a href="mailto:info@horemowuganda.org">info@horemowuganda.org</a>
-                                    <a
-                                        href="mailto:pasto.anthony@horemowuganda.org">pastor.anthony@horemowuganda.org</a>
+                                    <a href="mailto:info@horemowug.com">info@horemowug.com</a>
+                                    <!-- <a
+                                        href="mailto:pasto.anthony@horemowuganda.org">pastor.anthony@horemowuganda.org</a> -->
                                 </div>
                             </div>
 
@@ -1579,7 +1588,7 @@
                                     <i class="fab fa-whatsapp"></i>
                                     WhatsApp
                                 </a>
-                                <a href="mailto:info@horemowuganda.org" class="action-btn email-btn">
+                                <a href="mailto:info@horemowug.com" class="action-btn email-btn">
                                     <i class="fas fa-envelope"></i>
                                     Email
                                 </a>
@@ -1726,13 +1735,13 @@
                     <h3>Contact Info</h3>
                     <p><i class="fas fa-map-marker-alt"></i> Lugala, Kampala, Uganda</p>
                     <p><i class="fas fa-phone"></i> +256 775 633652</p>
-                    <p><i class="fas fa-envelope"></i> info@horemowuganda.org</p>
+                    <p><i class="fas fa-envelope"></i> info@horemowug.com</p>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>&copy; 2023 Holiness Revival Movement Worldwide - Uganda Chapter. All Rights Reserved.</p>
-                <p class="developer-credit">Website by KnDjoshua</p>
+                <!-- <p class="developer-credit">Website by KnDjoshua</p> -->
             </div>
         </div>
     </footer>
@@ -1802,9 +1811,6 @@
     </div>
 
     <script src="script.js"></script>
-
-
-
 
 
 
