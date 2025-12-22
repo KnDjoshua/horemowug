@@ -395,61 +395,7 @@ img {
 
 
 /* RESPONSIVE DESIGN */
-/* Reset and base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-html {
-    font-size: 14px; /* Base for mobile */
-    -webkit-text-size-adjust: 100%; /* Prevent font scaling on iOS */
-}
-
-body {
-    width: 100%;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-/* Typography scaling */
-h1 { font-size: 2rem; }
-h2 { font-size: 1.75rem; }
-h3 { font-size: 1.5rem; }
-p { font-size: 1rem; }
-
-/* Responsive container */
-.container {
-    width: 100%;
-    padding: 0 5vw; /* Use viewport width for padding */
-    margin: 0 auto;
-}
-
-/* Responsive images */
-img, video, iframe {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Touch-friendly buttons */
-button, .btn {
-    min-height: 44px; /* Minimum touch target size */
-    min-width: 44px;
-    padding: 12px 24px;
-}
-
-/* Media queries for larger screens */
-@media (min-width: 768px) {
-    html { font-size: 16px; }
-    .container { padding: 0 2rem; }
-    h1 { font-size: 2.5rem; }
-}
-
-@media (min-width: 1024px) {
-    html { font-size: 18px; }
-    .container { max-width: 1200px; }
-}
 
 
 
