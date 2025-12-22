@@ -680,62 +680,62 @@
     </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const accordionItems = document.querySelectorAll('.accordion-item');
-    
-    accordionItems.forEach(item => {
-        const header = item.querySelector('.accordion-header');
-        const content = item.querySelector('.accordion-content');
-        const icon = header.querySelector('.accordion-icon');
-        
-        // Add click event to header
-        header.addEventListener('click', function() {
-            toggleAccordion(item, header, content, icon);
-        });
-        
-        // Add keyboard support
-        header.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleAccordion(item, header, content, icon);
+        document.addEventListener('DOMContentLoaded', function () {
+            const accordionItems = document.querySelectorAll('.accordion-item');
+
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const icon = header.querySelector('.accordion-icon');
+
+                // Add click event to header
+                header.addEventListener('click', function () {
+                    toggleAccordion(item, header, content, icon);
+                });
+
+                // Add keyboard support
+                header.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleAccordion(item, header, content, icon);
+                    }
+                });
+            });
+
+            function toggleAccordion(item, header, content, icon) {
+                const isOpen = item.classList.contains('active');
+
+                // Close all accordions first (optional - remove if you want multiple open)
+                closeAllAccordions();
+
+                if (!isOpen) {
+                    // Open this accordion
+                    item.classList.add('active');
+                    header.setAttribute('aria-expanded', 'true');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.textContent = '−';
+                } else {
+                    // Close this accordion
+                    item.classList.remove('active');
+                    header.setAttribute('aria-expanded', 'false');
+                    content.style.maxHeight = null;
+                    icon.textContent = '+';
+                }
+            }
+
+            function closeAllAccordions() {
+                document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                    const otherHeader = otherItem.querySelector('.accordion-header');
+                    const otherContent = otherItem.querySelector('.accordion-content');
+                    const otherIcon = otherItem.querySelector('.accordion-icon');
+
+                    otherItem.classList.remove('active');
+                    otherHeader.setAttribute('aria-expanded', 'false');
+                    otherContent.style.maxHeight = null;
+                    otherIcon.textContent = '+';
+                });
             }
         });
-    });
-    
-    function toggleAccordion(item, header, content, icon) {
-        const isOpen = item.classList.contains('active');
-        
-        // Close all accordions first (optional - remove if you want multiple open)
-        closeAllAccordions();
-        
-        if (!isOpen) {
-            // Open this accordion
-            item.classList.add('active');
-            header.setAttribute('aria-expanded', 'true');
-            content.style.maxHeight = content.scrollHeight + 'px';
-            icon.textContent = '−';
-        } else {
-            // Close this accordion
-            item.classList.remove('active');
-            header.setAttribute('aria-expanded', 'false');
-            content.style.maxHeight = null;
-            icon.textContent = '+';
-        }
-    }
-    
-    function closeAllAccordions() {
-        document.querySelectorAll('.accordion-item').forEach(otherItem => {
-            const otherHeader = otherItem.querySelector('.accordion-header');
-            const otherContent = otherItem.querySelector('.accordion-content');
-            const otherIcon = otherItem.querySelector('.accordion-icon');
-            
-            otherItem.classList.remove('active');
-            otherHeader.setAttribute('aria-expanded', 'false');
-            otherContent.style.maxHeight = null;
-            otherIcon.textContent = '+';
-        });
-    }
-});
     </script>
 
 
@@ -2760,32 +2760,34 @@
                             <p>Have questions or prayer requests? We'd love to hear from you.</p>
                         </div>
 
-                        <form id="messageForm" class="enhanced-form">
+                        <form action="https://formsubmit.co/horemmowug@gmail.com" id="messageForm" class="enhanced-form"
+                            method="POST">
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="name">Your Name *</label>
                                     <input style="color: black;" type="text" id="name"
-                                        placeholder="Enter your full name" required>
+                                        placeholder="Enter your full name" name="NAME" required>
                                     <i class="fas fa-user input-icon"></i>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email Address *</label>
                                     <input style="color: black;" type="email" id="email"
-                                        placeholder="your.email@example.com" required>
+                                        placeholder="your.email@example.com" name="EMAIL" required>
                                     <i class="fas fa-envelope input-icon"></i>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="subject">Subject *</label>
-                                <select id="subject" required>
+                                <select name="SUBJECT" id="subject" required>
                                     <option value="">Select a topic</option>
-                                    <option value="prayer-request">Prayer Request</option>
-                                    <option value="general-inquiry">General Inquiry</option>
-                                    <option value="chapter-information">Chapter Information</option>
-                                    <option value="book-request">Book Request</option>
-                                    <option value="partnership">Partnership Opportunity</option>
-                                    <option value="other">Other</option>
+                                    <option value="prayer-request" name="prayer-request">Prayer Request</option>
+                                    <option value="general-inquiry" name="general-inquiry">General Inquiry</option>
+                                    <option value="chapter-information" name="chapter-information">Chapter Information
+                                    </option>
+                                    <option value="book-request" name="book-request">Book Request</option>
+                                    <option value="partnership" name="partnership">Partnership Opportunity</option>
+                                    <option value="other" name="other">Other</option>
                                 </select>
                                 <i class="fas fa-chevron-down input-icon"></i>
                             </div>
@@ -2794,7 +2796,7 @@
                                 <label for="message">Your Message *</label>
                                 <textarea id="message"
                                     placeholder="Please share your message, prayer request, or question..." rows="6"
-                                    required></textarea>
+                                    name="MESSAGE"></textarea>
                                 <i class="fas fa-comment input-icon textarea-icon"></i>
                             </div>
 
