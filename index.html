@@ -44,125 +44,125 @@
 
 
     <script>
-// Fix Hamburger Menu
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.querySelector('.hamburger');
-    const navList = document.querySelector('.nav-list');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const body = document.body;
-    
-    // Debug: Check if elements exist
-    console.log('Hamburger found:', hamburger);
-    console.log('Nav list found:', navList);
-    console.log('Nav links found:', navLinks.length);
-    
-    // Toggle mobile menu
-    if (hamburger) {
-        hamburger.addEventListener('click', function(e) {
-            console.log('Hamburger clicked');
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Toggle classes
-            this.classList.toggle('active');
-            navList.classList.toggle('active');
-            body.classList.toggle('menu-open');
-            
-            // Toggle aria-expanded for accessibility
-            const isExpanded = this.classList.contains('active');
-            this.setAttribute('aria-expanded', isExpanded);
-            
-            // Prevent scrolling when menu is open
-            if (navList.classList.contains('active')) {
-                body.style.overflow = 'hidden';
-                body.style.position = 'fixed';
-                body.style.width = '100%';
-                body.style.height = '100%';
-            } else {
-                body.style.overflow = '';
-                body.style.position = '';
-                body.style.width = '';
-                body.style.height = '';
+        // Fix Hamburger Menu
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburger = document.querySelector('.hamburger');
+            const navList = document.querySelector('.nav-list');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const body = document.body;
+
+            // Debug: Check if elements exist
+            console.log('Hamburger found:', hamburger);
+            console.log('Nav list found:', navList);
+            console.log('Nav links found:', navLinks.length);
+
+            // Toggle mobile menu
+            if (hamburger) {
+                hamburger.addEventListener('click', function (e) {
+                    console.log('Hamburger clicked');
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Toggle classes
+                    this.classList.toggle('active');
+                    navList.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+
+                    // Toggle aria-expanded for accessibility
+                    const isExpanded = this.classList.contains('active');
+                    this.setAttribute('aria-expanded', isExpanded);
+
+                    // Prevent scrolling when menu is open
+                    if (navList.classList.contains('active')) {
+                        body.style.overflow = 'hidden';
+                        body.style.position = 'fixed';
+                        body.style.width = '100%';
+                        body.style.height = '100%';
+                    } else {
+                        body.style.overflow = '';
+                        body.style.position = '';
+                        body.style.width = '';
+                        body.style.height = '';
+                    }
+                });
             }
+
+            // Close menu when clicking on a link
+            navLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    console.log('Nav link clicked:', this.textContent);
+
+                    // Close mobile menu
+                    if (hamburger.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navList.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        body.style.position = '';
+                        body.style.width = '';
+                        body.style.height = '';
+
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+
+                    // Update active class for all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!navList.contains(e.target) && !hamburger.contains(e.target)) {
+                    if (navList.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navList.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        body.style.position = '';
+                        body.style.width = '';
+                        body.style.height = '';
+
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+
+            // Close menu on escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' || e.key === 'Esc') {
+                    if (navList.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navList.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        body.style.position = '';
+                        body.style.width = '';
+                        body.style.height = '';
+
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+
+            // Handle window resize - close menu if resized to desktop
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 768) {
+                    if (navList.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navList.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        body.style.position = '';
+                        body.style.width = '';
+                        body.style.height = '';
+
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
         });
-    }
-    
-    // Close menu when clicking on a link
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            console.log('Nav link clicked:', this.textContent);
-            
-            // Close mobile menu
-            if (hamburger.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navList.classList.remove('active');
-                body.classList.remove('menu-open');
-                body.style.overflow = '';
-                body.style.position = '';
-                body.style.width = '';
-                body.style.height = '';
-                
-                hamburger.setAttribute('aria-expanded', 'false');
-            }
-            
-            // Update active class for all links
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!navList.contains(e.target) && !hamburger.contains(e.target)) {
-            if (navList.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navList.classList.remove('active');
-                body.classList.remove('menu-open');
-                body.style.overflow = '';
-                body.style.position = '';
-                body.style.width = '';
-                body.style.height = '';
-                
-                hamburger.setAttribute('aria-expanded', 'false');
-            }
-        }
-    });
-    
-    // Close menu on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' || e.key === 'Esc') {
-            if (navList.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navList.classList.remove('active');
-                body.classList.remove('menu-open');
-                body.style.overflow = '';
-                body.style.position = '';
-                body.style.width = '';
-                body.style.height = '';
-                
-                hamburger.setAttribute('aria-expanded', 'false');
-            }
-        }
-    });
-    
-    // Handle window resize - close menu if resized to desktop
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            if (navList.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navList.classList.remove('active');
-                body.classList.remove('menu-open');
-                body.style.overflow = '';
-                body.style.position = '';
-                body.style.width = '';
-                body.style.height = '';
-                
-                hamburger.setAttribute('aria-expanded', 'false');
-            }
-        }
-    });
-});
-</script>
+    </script>
 
     <!-- Hero Section -->
     <!-- Enhanced Hero Section with YouTube Live -->
@@ -550,8 +550,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="pastors-grid">
                 <div class="pastor-card">
                     <div class="pastor-img">
-                        <img src="/assets/Pastors/paul rika.jpg"
-                            alt="Pastor Paul Rika">
+                        <img src="/assets/Pastors/paul rika.jpg" alt="Pastor Paul Rika">
                     </div>
                     <div class="pastor-info">
                         <h3>Pastor Paul Rika</h3>
@@ -563,8 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="pastor-card">
                     <div class="pastor-img">
-                        <img src="/assets/Pastors/Linda Rika.jpg"
-                            alt="Sister Linda Paul Rika">
+                        <img src="/assets/Pastors/Linda Rika.jpg" alt="Sister Linda Paul Rika">
                     </div>
                     <div class="pastor-info">
                         <h3>Sister Linda Paul Rika</h3>
@@ -576,8 +574,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="pastor-card">
                     <div class="pastor-img">
-                        <img src="/assets/Pastors/Anthony azi.jpg"
-                            alt="Pastor Anthony Azi">
+                        <img src="/assets/Pastors/Anthony azi.jpg" alt="Pastor Anthony Azi">
                     </div>
                     <div class="pastor-info">
                         <h3>Pastor Anthony Azi</h3>
@@ -589,8 +586,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="pastor-card">
                     <div class="pastor-img">
-                        <img src="/assets/Pastors/Suzan.jpg"
-                            alt="Pastor Susan Azi">
+                        <img src="/assets/Pastors/Suzan.jpg" alt="Pastor Susan Azi">
                     </div>
                     <div class="pastor-info">
                         <h3>Pastor Susan Azi</h3>
@@ -1568,7 +1564,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h4>Get the HOREMOW App Today!</h4>
                     <p>Access all our books, sermons, and resources in one place</p>
                     <div class="app-cta-buttons">
-                        <a href="https://play.google.com/store/apps/details?id=com.digimaria.hrmwbkslite&hl=en" class="btn btn-play-store" target="_blank">
+                        <a href="https://play.google.com/store/apps/details?id=com.digimaria.hrmwbkslite&hl=en"
+                            class="btn btn-play-store" target="_blank">
                             <i class="fab fa-google-play"></i>
                             <div>
                                 <span>GET IT ON</span>
@@ -1685,16 +1682,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <h4>Service Times</h4>
                                     <div class="service-times">
                                         <div class="service-day">
-                                            <span class="day">Tuesday</span>
-                                            <span class="time">4pm - 7pm</span>
+                                            <span class="day">Tuesday <spa class="time">4pm - 7pm</spa></span>
                                         </div>
                                         <div class="service-day">
-                                            <span class="day">Saturday</span>
-                                            <span class="time">2pm - 6pm</span>
+                                            <span class="day">Saturday <spa class="time">2pm - 6pm</spa></span>
                                         </div>
                                         <div class="service-day">
-                                            <span class="day">Sunday</span>
-                                            <span class="time">2pm - 6pm</span>
+                                            <span class="day">Sunday <spa class="time">2pm - 6pm</spa></span>
                                         </div>
                                     </div>
                                 </div>
