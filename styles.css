@@ -67,6 +67,7 @@ img {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1.5rem;
+    
 }
 
 .section {
@@ -884,6 +885,552 @@ img {
 /* Enhanced Chapters Section */
 .chapters {
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+
+
+/* more chapters */
+/* SCOPED CHAPTERS SECTION STYLES - Add to your existing CSS file */
+
+/* Chapters Finder Container */
+.chapters-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin: 3rem auto;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 1400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.chapters-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #4a6fa5, #6c63ff, #ff6584);
+    z-index: 1;
+}
+
+/* Header Styles */
+.chapters-section .finder-header {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.chapters-section .subsection-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2e2c50;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0px;
+    padding-top: 10;
+}
+
+.chapters-section .subsection-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #4a6fa5, #6c63ff);
+    border-radius: 2px;
+}
+
+/* Search and Filter Controls - Scoped */
+.chapters-section .finder-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.chapters-section .search-box {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+.chapters-section .search-box i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c63ff;
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+.chapters-section #chapterSearch {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.chapters-section #chapterSearch:focus {
+    outline: none;
+    border-color: #6c63ff;
+    box-shadow: 0 5px 20px rgba(108, 99, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.chapters-section #chapterSearch::placeholder {
+    color: #95a5a6;
+}
+
+.chapters-section .filter-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.chapters-section .filter-btn {
+    padding: 0.8rem 1.8rem;
+    border: 2px solid #4a6fa5;
+    background: white;
+    color: #4a6fa5;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chapters-section .filter-btn::before {
+    content: '○';
+    font-size: 0.8rem;
+}
+
+.chapters-section .filter-btn.active {
+    background: linear-gradient(135deg, #4a6fa5, #6c63ff);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+}
+
+.chapters-section .filter-btn.active::before {
+    content: '●';
+}
+
+.chapters-section .filter-btn:hover:not(.active) {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Chapters Grid Layout - Scoped */
+.chapters-section .chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.chapters-section .chapters-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chapters-section .chapters-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.chapters-section .chapters-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(#4a6fa5, #6c63ff);
+    border-radius: 10px;
+}
+
+.chapters-section .chapters-grid::-webkit-scrollbar-thumb:hover {
+    background: #4a6fa5;
+}
+
+/* Chapter Cards - Scoped */
+.chapters-section .chapter-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.chapters-section .chapter-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(108, 99, 255, 0.15);
+    border-color: #6c63ff;
+}
+
+.chapters-section .chapter-card.unit {
+    border-left: 5px solid #ff6584;
+}
+
+.chapters-section .chapter-card:not(.unit) {
+    border-left: 5px solid #4a6fa5;
+}
+
+.chapters-section .chapter-header {
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+
+.chapters-section .chapter-header h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-right: 100px;
+    line-height: 1.3;
+}
+
+.chapters-section .chapter-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.chapters-section .chapter-badge.headquarters {
+    background: linear-gradient(135deg, #ffd700, #ffa500);
+    color: #2c3e50;
+}
+
+.chapters-section .chapter-badge.country {
+    background: linear-gradient(135deg, #4a6fa5, #6c63ff);
+    color: white;
+}
+
+.chapters-section .chapter-badge.unit {
+    background: linear-gradient(135deg, #ff6584, #ff9a9e);
+    color: white;
+}
+
+/* Chapter Info - Scoped */
+.chapters-section .chapter-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.chapters-section .leader-info,
+.chapters-section .contact-info,
+.chapters-section .location-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.chapters-section .leader-info i,
+.chapters-section .contact-info i,
+.chapters-section .location-info i {
+    color: #6c63ff;
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.chapters-section .contact-info a {
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.chapters-section .contact-info a:hover {
+    color: #6c63ff;
+    text-decoration: underline;
+}
+
+/* Chapter Actions - Scoped */
+.chapters-section .chapter-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.chapters-section .action-btn {
+    flex: 1;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.chapters-section .contact-btn {
+    background: linear-gradient(135deg, #4a6fa5, #6c63ff);
+    color: white;
+}
+
+.chapters-section .contact-btn:hover {
+    background: linear-gradient(135deg, #3a5f95, #5c53ff);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+}
+
+.chapters-section .whatsapp-btn {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+}
+
+.chapters-section .whatsapp-btn:hover {
+    background: linear-gradient(135deg, #1da851, #0e7c6c);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+}
+
+/* No Results Message - Scoped */
+.chapters-section .no-results {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    margin: 2rem 0;
+}
+
+.chapters-section .no-results i {
+    font-size: 3rem;
+    color: #ddd;
+    margin-bottom: 1.5rem;
+}
+
+.chapters-section .no-results h4 {
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.chapters-section .no-results p {
+    color: #95a5a6;
+    font-size: 1rem;
+}
+
+/* Contact CTA - Scoped */
+.chapters-section + .contact-cta {
+    background: linear-gradient(135deg, #2c3e50, #4a6fa5);
+    border-radius: 20px;
+    padding: 3rem;
+    margin-top: 3rem;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.chapters-section + .contact-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="white" opacity="0.05"/></svg>');
+    pointer-events: none;
+}
+
+.chapters-section + .contact-cta .cta-content {
+    position: relative;
+    z-index: 1;
+}
+
+.chapters-section + .contact-cta .cta-content h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.chapters-section + .contact-cta .cta-content p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.chapters-section + .contact-cta .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.chapters-section + .contact-cta .btn {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.chapters-section + .contact-cta .btn-primary {
+    background: linear-gradient(135deg, #ff6584, #ff9a9e);
+    color: white;
+}
+
+.chapters-section + .contact-cta .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 101, 132, 0.3);
+    background: linear-gradient(135deg, #ff5574, #ff8a8e);
+}
+
+.chapters-section + .contact-cta .btn-outline {
+    background: transparent;
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.chapters-section + .contact-cta .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    border-color: white;
+}
+
+/* Responsive Design - Scoped */
+@media (max-width: 992px) {
+    .chapters-section {
+        padding: 2rem;
+        margin: 2rem 1rem;
+    }
+    
+    .chapters-section .chapters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        max-height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .chapters-section {
+        padding: 1.5rem;
+    }
+    
+    .chapters-section .subsection-title {
+        font-size: 1.8rem;
+    }
+    
+    .chapters-section .filter-tabs {
+        gap: 8px;
+    }
+    
+    .chapters-section .filter-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    .chapters-section .chapters-grid {
+        grid-template-columns: 1fr;
+        max-height: 700px;
+    }
+    
+    .chapters-section + .contact-cta {
+        padding: 2rem 1.5rem;
+    }
+    
+    .chapters-section + .contact-cta .cta-content h3 {
+        font-size: 1.6rem;
+    }
+    
+    .chapters-section + .contact-cta .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .chapters-section + .contact-cta .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .chapters-section .finder-controls {
+        gap: 1rem;
+    }
+    
+    .chapters-section #chapterSearch {
+        padding: 0.8rem 0.8rem 0.8rem 3rem;
+        font-size: 0.95rem;
+    }
+    
+    .chapters-section .chapter-card {
+        padding: 1.2rem;
+    }
+    
+    .chapters-section .chapter-header h4 {
+        font-size: 1.2rem;
+        margin-right: 85px;
+    }
+    
+    .chapters-section .chapter-badge {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem;
+    }
+    
+    .chapters-section .action-btn {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Animation for cards - Scoped */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chapters-section .chapter-card {
+    animation: fadeInUp 0.5s ease forwards;
 }
 
 /* Headquarters Highlight */
