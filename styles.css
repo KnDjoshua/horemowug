@@ -9,9 +9,6 @@
 
 
 
-
-
-
 /* ============================================
    ABSOLUTE CSS FOR DEVICE RESPONSIVENESS
    ============================================ */
@@ -69,6 +66,10 @@
 .justify-center {
     justify-content: center;
 }
+
+
+
+
 
 
 
@@ -384,6 +385,8 @@ img {
     position: relative;
     color: var(--white);
     text-align: center;
+    background-image: url('./assets/Pastors/Linda\ Rika.jpg');
+    
 }
 
 .hero-overlay {
@@ -6115,5 +6118,84 @@ img {
 
     .popup-notification {
         width: 220px;
+    }
+}
+
+
+
+/* our Believes */
+/* Accordion Styles */
+.accordion-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.accordion-item.active {
+    border-color: #4a6cf7;
+    box-shadow: 0 4px 12px rgba(74, 108, 247, 0.1);
+}
+
+.accordion-header {
+    padding: 18px 20px;
+    background: #f8f9fa;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+.accordion-header:hover {
+    background: #e9ecef;
+}
+
+.accordion-item.active .accordion-header {
+    background: #e9ecef;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.accordion-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.accordion-icon {
+    font-size: 18px;
+    font-weight: 300;
+    color: #666;
+    transition: transform 0.3s ease;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background: white;
+}
+
+.accordion-content p {
+    padding: 20px;
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .accordion-header {
+        padding: 15px;
+    }
+
+    .accordion-header h3 {
+        font-size: 15px;
+    }
+
+    .accordion-content p {
+        padding: 15px;
     }
 }
