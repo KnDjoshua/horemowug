@@ -7,6 +7,78 @@
     box-sizing: border-box;
 }
 
+
+
+
+
+
+/* ============================================
+   ABSOLUTE CSS FOR DEVICE RESPONSIVENESS
+   ============================================ */
+
+/* Reset and ensure proper box-sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Base responsive container */
+.responsive-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Responsive Grid System */
+.grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.grid-1 {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Flex utilities */
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
 :root {
     --primary: #2c5530;
     --primary-dark: #1e3a23;
@@ -67,7 +139,7 @@ img {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1.5rem;
-    
+
 }
 
 .section {
@@ -256,7 +328,7 @@ img {
     .hamburger {
         display: flex;
     }
-    
+
     .nav-list {
         position: fixed;
         top: 70px;
@@ -272,29 +344,29 @@ img {
         height: calc(100vh - 70px);
         overflow-y: auto;
     }
-    
+
     .nav-list.active {
         left: 0;
     }
-    
+
     .nav-list li {
         width: 100%;
         text-align: center;
         padding: 0;
     }
-    
+
     .nav-link {
         display: block;
         padding: 1rem 2rem;
         font-size: 1.1rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
-    
+
     .nav-link:hover::after,
     .nav-link.active::after {
         display: none;
     }
-    
+
     /* Prevent body scroll when menu is open */
     body.menu-open {
         overflow: hidden;
@@ -1245,7 +1317,7 @@ img {
 }
 
 /* Contact CTA - Scoped */
-.chapters-section + .contact-cta {
+.chapters-section+.contact-cta {
     background: linear-gradient(135deg, #2c3e50, #4a6fa5);
     border-radius: 20px;
     padding: 3rem;
@@ -1256,7 +1328,7 @@ img {
     overflow: hidden;
 }
 
-.chapters-section + .contact-cta::before {
+.chapters-section+.contact-cta::before {
     content: '';
     position: absolute;
     top: 0;
@@ -1267,18 +1339,18 @@ img {
     pointer-events: none;
 }
 
-.chapters-section + .contact-cta .cta-content {
+.chapters-section+.contact-cta .cta-content {
     position: relative;
     z-index: 1;
 }
 
-.chapters-section + .contact-cta .cta-content h3 {
+.chapters-section+.contact-cta .cta-content h3 {
     font-size: 2rem;
     margin-bottom: 1rem;
     font-weight: 700;
 }
 
-.chapters-section + .contact-cta .cta-content p {
+.chapters-section+.contact-cta .cta-content p {
     font-size: 1.1rem;
     margin-bottom: 2rem;
     opacity: 0.9;
@@ -1288,14 +1360,14 @@ img {
     line-height: 1.6;
 }
 
-.chapters-section + .contact-cta .cta-buttons {
+.chapters-section+.contact-cta .cta-buttons {
     display: flex;
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.chapters-section + .contact-cta .btn {
+.chapters-section+.contact-cta .btn {
     padding: 1rem 2rem;
     border-radius: 50px;
     font-weight: 600;
@@ -1308,24 +1380,24 @@ img {
     border: 2px solid transparent;
 }
 
-.chapters-section + .contact-cta .btn-primary {
+.chapters-section+.contact-cta .btn-primary {
     background: linear-gradient(135deg, #ff6584, #ff9a9e);
     color: white;
 }
 
-.chapters-section + .contact-cta .btn-primary:hover {
+.chapters-section+.contact-cta .btn-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(255, 101, 132, 0.3);
     background: linear-gradient(135deg, #ff5574, #ff8a8e);
 }
 
-.chapters-section + .contact-cta .btn-outline {
+.chapters-section+.contact-cta .btn-outline {
     background: transparent;
     color: white;
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-.chapters-section + .contact-cta .btn-outline:hover {
+.chapters-section+.contact-cta .btn-outline:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: translateY(-3px);
     border-color: white;
@@ -1337,7 +1409,7 @@ img {
         padding: 2rem;
         margin: 2rem 1rem;
     }
-    
+
     .chapters-section .chapters-grid {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         max-height: 600px;
@@ -1348,39 +1420,39 @@ img {
     .chapters-section {
         padding: 1.5rem;
     }
-    
+
     .chapters-section .subsection-title {
         font-size: 1.8rem;
     }
-    
+
     .chapters-section .filter-tabs {
         gap: 8px;
     }
-    
+
     .chapters-section .filter-btn {
         padding: 0.6rem 1.2rem;
         font-size: 0.9rem;
     }
-    
+
     .chapters-section .chapters-grid {
         grid-template-columns: 1fr;
         max-height: 700px;
     }
-    
-    .chapters-section + .contact-cta {
+
+    .chapters-section+.contact-cta {
         padding: 2rem 1.5rem;
     }
-    
-    .chapters-section + .contact-cta .cta-content h3 {
+
+    .chapters-section+.contact-cta .cta-content h3 {
         font-size: 1.6rem;
     }
-    
-    .chapters-section + .contact-cta .cta-buttons {
+
+    .chapters-section+.contact-cta .cta-buttons {
         flex-direction: column;
         align-items: center;
     }
-    
-    .chapters-section + .contact-cta .btn {
+
+    .chapters-section+.contact-cta .btn {
         width: 100%;
         max-width: 300px;
         justify-content: center;
@@ -1391,26 +1463,26 @@ img {
     .chapters-section .finder-controls {
         gap: 1rem;
     }
-    
+
     .chapters-section #chapterSearch {
         padding: 0.8rem 0.8rem 0.8rem 3rem;
         font-size: 0.95rem;
     }
-    
+
     .chapters-section .chapter-card {
         padding: 1.2rem;
     }
-    
+
     .chapters-section .chapter-header h4 {
         font-size: 1.2rem;
         margin-right: 85px;
     }
-    
+
     .chapters-section .chapter-badge {
         font-size: 0.7rem;
         padding: 0.25rem 0.6rem;
     }
-    
+
     .chapters-section .action-btn {
         padding: 0.7rem;
         font-size: 0.85rem;
@@ -1423,6 +1495,7 @@ img {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -3753,11 +3826,25 @@ img {
     transform: scale(1.1);
 }
 
-.event-badge.category-service { background: #2ecc71; }
-.event-badge.category-meeting { background: #3498db; }
-.event-badge.category-prayer { background: #9b59b6; }
-.event-badge.category-outreach { background: #e74c3c; }
-.event-badge.category-general { background: #f39c12; }
+.event-badge.category-service {
+    background: #2ecc71;
+}
+
+.event-badge.category-meeting {
+    background: #3498db;
+}
+
+.event-badge.category-prayer {
+    background: #9b59b6;
+}
+
+.event-badge.category-outreach {
+    background: #e74c3c;
+}
+
+.event-badge.category-general {
+    background: #f39c12;
+}
 
 .event-more {
     background: #95a5a6;
@@ -3781,14 +3868,14 @@ img {
     background: white;
     border-radius: 8px;
     margin-bottom: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s, box-shadow 0.3s;
     border-left: 4px solid var(--primary-color, #3498db);
 }
 
 .event-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .event-date {
@@ -3878,7 +3965,7 @@ img {
     background: white;
     border-radius: 8px;
     margin-bottom: 10px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s;
 }
 
@@ -3924,16 +4011,6 @@ img {
 }
 
 .upcoming
-
-
-
-
-
-
-
-
-
-
 
 /* API Configuration Panel */
 .api-config-panel {
@@ -5690,7 +5767,7 @@ img {
 }
 
 /* chatbot styles */
-   /* Chatbot Widget Styles - Only affects the widget */
+/* Chatbot Widget Styles - Only affects the widget */
 .chatbot-widget {
     position: fixed;
     bottom: 20px;
@@ -5733,8 +5810,13 @@ img {
 }
 
 @keyframes bounce {
-    from { transform: scale(1); }
-    to { transform: scale(1.2); }
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
 }
 
 .chatbot-icon:hover {
@@ -5743,9 +5825,17 @@ img {
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 4px 20px rgba(74, 109, 167, 0.4); }
-    50% { box-shadow: 0 4px 25px rgba(74, 109, 167, 0.8); }
-    100% { box-shadow: 0 4px 20px rgba(74, 109, 167, 0.4); }
+    0% {
+        box-shadow: 0 4px 20px rgba(74, 109, 167, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 4px 25px rgba(74, 109, 167, 0.8);
+    }
+
+    100% {
+        box-shadow: 0 4px 20px rgba(74, 109, 167, 0.4);
+    }
 }
 
 .chatbot-container {
@@ -5827,8 +5917,15 @@ img {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .bot-message {
@@ -5940,8 +6037,15 @@ img {
 }
 
 @keyframes slideIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .popup-notification.active {
@@ -6002,13 +6106,13 @@ img {
         width: 300px;
         height: 450px;
     }
-    
+
     .chatbot-icon {
         width: 55px;
         height: 55px;
         font-size: 22px;
     }
-    
+
     .popup-notification {
         width: 220px;
     }
