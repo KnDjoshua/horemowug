@@ -11,9 +11,9 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Add to your <head> section -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css" rel="stylesheet">
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 </head>
 
 <body>
@@ -31,7 +31,7 @@
                     <li><a href="#pastors" class="nav-link">Pastors</a></li>
                     <li><a href="#beliefs" class="nav-link">Beliefs</a></li>
                     <li><a href="#chapters" class="nav-link">Chapters</a></li>
-                    <li><a href="#sermons" class="nav-link">Sermons</a></li>
+                    <!-- <li><a href="#sermons" class="nav-link">Sermons</a></li> -->
                     <li><a href="#books" class="nav-link">Books</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
@@ -615,56 +615,61 @@
                         12:14).</p>
                 </div>
 
-                <div class="beliefs-accordion">
+                <div class="beliefs-accordion" role="tablist">
                     <div class="accordion-item">
-                        <div class="accordion-header">
+                        <div class="accordion-header" id="heading1" role="tab" aria-expanded="false"
+                            aria-controls="content1" tabindex="0">
                             <h3>The Holy Trinity</h3>
                             <span class="accordion-icon">+</span>
                         </div>
-                        <div class="accordion-content">
+                        <div class="accordion-content" id="content1" role="tabpanel" aria-labelledby="heading1">
                             <p>We believe that the Holy Trinity consists of GOD Almighty, The Father, JESUS CHRIST the
                                 son of GOD, and Holy Spirit; all the three are one indivisible in Godhead and yet
                                 distinct in names.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
-                        <div class="accordion-header">
+                        <div class="accordion-header" id="heading2" role="tab" aria-expanded="false"
+                            aria-controls="content2" tabindex="0">
                             <h3>Virgin Birth, Sinless Life & Resurrection</h3>
                             <span class="accordion-icon">+</span>
                         </div>
-                        <div class="accordion-content">
+                        <div class="accordion-content" id="content2" role="tabpanel" aria-labelledby="heading2">
                             <p>We believe that JESUS CHRIST was born by a virgin, lived a sinless life, was crucified,
                                 died on the cross, buried, and rose triumphantly from the grave on the third day. He
                                 ascended into heaven and is coming back to take believers home.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
-                        <div class="accordion-header">
+                        <div class="accordion-header" id="heading3" role="tab" aria-expanded="false"
+                            aria-controls="content3" tabindex="0">
                             <h3>Repentance & Restitution</h3>
                             <span class="accordion-icon">+</span>
                         </div>
-                        <div class="accordion-content">
+                        <div class="accordion-content" id="content3" role="tabpanel" aria-labelledby="heading3">
                             <p>We believe in the utter depravity of human nature and the necessity for repentance.
                                 Restitution is the act of restoring to rightful owners what has been stolen or
                                 defrauded, making amends for wrongs perpetrated.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
-                        <div class="accordion-header">
+                        <div class="accordion-header" id="heading4" role="tab" aria-expanded="false"
+                            aria-controls="content4" tabindex="0">
                             <h3>Justification & Sanctification</h3>
                             <span class="accordion-icon">+</span>
                         </div>
-                        <div class="accordion-content">
+                        <div class="accordion-content" id="content4" role="tabpanel" aria-labelledby="heading4">
                             <p>We believe in justification by faith in Jesus Christ and sanctification as being set
                                 apart as sacred and holy through God's grace, achieved after being born again.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
-                        <div class="accordion-header">
+                        <div class="accordion-header" id="heading5" role="tab" aria-expanded="false"
+                            aria-controls="content5" tabindex="0">
                             <h3>Water Baptism & Lord's Supper</h3>
                             <span class="accordion-icon">+</span>
                         </div>
-                        <div class="accordion-content">
+                        <div class="accordion-content" id="content5" role="tabpanel" aria-labelledby="heading5">
                             <p>We believe in water baptism by immersion and the regular observance of the Lord's Supper
                                 in remembrance of Christ's atoning death and resurrection.</p>
                         </div>
@@ -674,6 +679,64 @@
         </div>
     </section>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    
+    accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        const content = item.querySelector('.accordion-content');
+        const icon = header.querySelector('.accordion-icon');
+        
+        // Add click event to header
+        header.addEventListener('click', function() {
+            toggleAccordion(item, header, content, icon);
+        });
+        
+        // Add keyboard support
+        header.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleAccordion(item, header, content, icon);
+            }
+        });
+    });
+    
+    function toggleAccordion(item, header, content, icon) {
+        const isOpen = item.classList.contains('active');
+        
+        // Close all accordions first (optional - remove if you want multiple open)
+        closeAllAccordions();
+        
+        if (!isOpen) {
+            // Open this accordion
+            item.classList.add('active');
+            header.setAttribute('aria-expanded', 'true');
+            content.style.maxHeight = content.scrollHeight + 'px';
+            icon.textContent = '−';
+        } else {
+            // Close this accordion
+            item.classList.remove('active');
+            header.setAttribute('aria-expanded', 'false');
+            content.style.maxHeight = null;
+            icon.textContent = '+';
+        }
+    }
+    
+    function closeAllAccordions() {
+        document.querySelectorAll('.accordion-item').forEach(otherItem => {
+            const otherHeader = otherItem.querySelector('.accordion-header');
+            const otherContent = otherItem.querySelector('.accordion-content');
+            const otherIcon = otherItem.querySelector('.accordion-icon');
+            
+            otherItem.classList.remove('active');
+            otherHeader.setAttribute('aria-expanded', 'false');
+            otherContent.style.maxHeight = null;
+            otherIcon.textContent = '+';
+        });
+    }
+});
+    </script>
 
 
 
@@ -798,7 +861,7 @@
 
     <!-- MORE CHAPTERS -->
     <!-- Chapters Finder -->
-    <div  class=" container chapters-finder chapters-section">
+    <div class=" container chapters-finder chapters-section">
         <div class="finder-header">
             <h3 id="chapters" class="section subsection-title">Find a Chapter Near You</h3>
             <div class="finder-controls">
@@ -2151,30 +2214,30 @@
     </script>
 
     <!-- Enhanced Sermons Section -->
-    <section id="sermons" class="section sermons">
+    <!-- <section id="sermons" class="section sermons">
         <div class="container">
             <h2 class="section-title">Sermons</h2>
-            <p class="section-subtitle">Nourish Your Spirit with the Word</p>
+            <p class="section-subtitle">Nourish Your Spirit with the Word</p> -->
 
-            <!-- Sermons Filter -->
-            <div class="sermons-filter">
+    <!-- Sermons Filter -->
+    <!-- <div class="sermons-filter">
                 <button class="filter-btn active" data-filter="all">All Sermons</button>
                 <button class="filter-btn" data-filter="pst-paul">Pastor Paul Rika</button>
                 <button class="filter-btn" data-filter="pst-anthony">Pastor Anthony Azi</button>
                 <button class="filter-btn" data-filter="pst-susan">Pastor Susan Azi</button>
                 <button class="filter-btn" data-filter="testimony">Testimonies</button>
-            </div>
+            </div> -->
 
-            <!-- Sermons Search -->
-            <div class="sermons-search">
+    <!-- Sermons Search -->
+    <!-- <div class="sermons-search">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <input type="text" id="sermonSearch" placeholder="Search sermons by title or topic...">
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Sermons Statistics -->
-            <div class="sermons-stats">
+    <!-- Sermons Statistics -->
+    <!-- <div class="sermons-stats">
                 <div class="stat">
                     <span class="number" id="totalSermons">12</span>
                     <span class="label">Total Sermons</span>
@@ -2187,10 +2250,10 @@
                     <span class="number">4</span>
                     <span class="label">Speakers</span>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Sermons Grid -->
-            <div class="sermons-grid">
+    <!-- Sermons Grid -->
+    <!-- <div class="sermons-grid">
                 <div class="sermon-card" data-preacher="pst-anthony" data-category="holiness">
                     <div class="sermon-thumbnail">
                         <img src="https://placehold.co/400x225/2c5530/ffffff?text=The+Path+to+Righteousness"
@@ -2228,9 +2291,9 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="sermon-card" data-preacher="pst-susan" data-category="holiness">
+    <!-- <div class="sermon-card" data-preacher="pst-susan" data-category="holiness">
                     <div class="sermon-thumbnail">
                         <img src="https://placehold.co/400x225/2c5530/ffffff?text=Living+in+Holiness"
                             alt="Living in Holiness">
@@ -2346,70 +2409,70 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Load More Button -->
-            <div class="load-more-container">
+    <!-- Load More Button -->
+    <!-- <div class="load-more-container">
                 <button class="btn btn-outline" id="loadMoreSermons">
                     <i class="fas fa-redo"></i>
                     Load More Sermons
                 </button>
+            </div> -->
+
+    <!-- YouTube Integration -->
+    <div class="youtube-integration">
+        <div class="youtube-channel">
+            <div class="youtube-header">
+                <div class="youtube-icon">
+                    <i class="fab fa-youtube"></i>
+                </div>
+                <div class="youtube-info">
+                    <h3>HOREMOW Headquarters YouTube Channel</h3>
+                    <p>Access more sermons and resources from our International Director, Pastor Paul Rika</p>
+                </div>
             </div>
-
-            <!-- YouTube Integration -->
-            <div class="youtube-integration">
-                <div class="youtube-channel">
-                    <div class="youtube-header">
-                        <div class="youtube-icon">
-                            <i class="fab fa-youtube"></i>
-                        </div>
-                        <div class="youtube-info">
-                            <h3>HOREMOW Headquarters YouTube Channel</h3>
-                            <p>Access more sermons and resources from our International Director, Pastor Paul Rika</p>
-                        </div>
-                    </div>
-                    <div class="youtube-stats">
-                        <div class="youtube-stat">
-                            <span class="number">1.2K+</span>
-                            <span class="label">Subscribers</span>
-                        </div>
-                        <div class="youtube-stat">
-                            <span class="number">50+</span>
-                            <span class="label">Videos</span>
-                        </div>
-                        <div class="youtube-stat">
-                            <span class="number">10K+</span>
-                            <span class="label">Views</span>
-                        </div>
-                    </div>
-                    <div class="youtube-actions">
-                        <a href="https://www.youtube.com/@pastorpaulrika1" class="btn btn-youtube" target="_blank">
-                            <i class="fab fa-youtube"></i>
-                            Visit Our Channel
-                        </a>
-
-                    </div>
+            <div class="youtube-stats">
+                <div class="youtube-stat">
+                    <span class="number">1.2K+</span>
+                    <span class="label">Subscribers</span>
                 </div>
-
-                <!-- Featured YouTube Video -->
-                <div class="featured-video">
-                    <h4>Featured Sermon</h4>
-                    <div class="video-container">
-                        <div class="video-placeholder">
-                            <img src="https://placehold.co/800x450/2c5530/ffffff?text=Featured+Sermon+Video"
-                                alt="Featured Sermon">
-                            <div class="play-btn large">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <h5>The Power of Holiness in Last Days</h5>
-                        <p>By Pastor Paul Rika • 2.5K views • 1 week ago</p>
-                    </div>
+                <div class="youtube-stat">
+                    <span class="number">50+</span>
+                    <span class="label">Videos</span>
                 </div>
+                <div class="youtube-stat">
+                    <span class="number">10K+</span>
+                    <span class="label">Views</span>
+                </div>
+            </div>
+            <div class="youtube-actions">
+                <a href="https://www.youtube.com/@pastorpaulrika1" class="btn btn-youtube" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                    Visit Our Channel
+                </a>
+
             </div>
         </div>
+
+        <!-- Featured YouTube Video -->
+        <div class="featured-video">
+            <h4>Featured Sermon</h4>
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <img src="https://placehold.co/800x450/2c5530/ffffff?text=Featured+Sermon+Video"
+                        alt="Featured Sermon">
+                    <div class="play-btn large">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="video-info">
+                <h5>The Power of Holiness in Last Days</h5>
+                <p>By Pastor Paul Rika • 2.5K views • 1 week ago</p>
+            </div>
+        </div>
+    </div>
+    </div>
     </section>
 
 
@@ -2548,7 +2611,8 @@
                                 <strong>Google Play</strong>
                             </div>
                         </a>
-                        <a href="[YOUR_APP_STORE_LINK]" class="btn btn-app-store" target="_blank">
+                        <a href="https://play.google.com/store/apps/details?id=com.digimaria.hrmwbkslite&hl=en"
+                            class="btn btn-app-store" target="_blank">
                             <i class="fab fa-apple"></i>
                             <div>
                                 <span>Download on the</span>
