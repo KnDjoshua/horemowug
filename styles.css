@@ -385,9 +385,60 @@ img {
     position: relative;
     color: var(--white);
     text-align: center;
-    background-image: url('./assets/Pastors/Linda\ Rika.jpg');
+    background-image: url('./assets/home/horemow\ \(1\).jpg');
+    background-attachment: fixed;
+    background-size: cover;
     
 }
+
+/* hero style */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .hero-overlay {
     position: absolute;
